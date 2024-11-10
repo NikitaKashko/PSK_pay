@@ -3,9 +3,14 @@ import {jwtDecode} from "jwt-decode";
 import api from "../api.js"
 import {REFRESH_TOKEN, ACCESS_TOKEN} from "../constants.js";
 import {useState, useEffect} from "react";
+import PropTypes from 'prop-types';
 
-function ProtectedRoute({children}) {
-    const [isAuthorized, setISAuthorized] = React.useState(null);
+function ProtectedRoute({ children }) {
+    const [isAuthorized, setISAuthorized] = useState(null);
+
+    ProtectedRoute.propTypes = {
+        children: PropTypes.node.isRequired // Проп children должен быть узлом React
+    };
 
     useEffect(() =>{
         auth().catch(() => setISAuthorized(false))
@@ -46,7 +51,7 @@ function ProtectedRoute({children}) {
         }
     }
 
-    if (!isAuthorized === null){
+    if (isAuthorized === null){
         return <div>Loading...</div>
     }
 

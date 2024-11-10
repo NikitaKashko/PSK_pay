@@ -7,13 +7,13 @@ import NotFound from "./pages/NotFound.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function Logout(){
-  localStorage.clear();
-  return <Navigate to="/login" />
+    localStorage.clear();
+    return <Navigate to="/login" />
 }
 
 function RegisterAndLogout() {
-  localStorage.clear();
-  return <Register />
+    localStorage.clear();
+    return <Register />
 }
 function App() {
 
