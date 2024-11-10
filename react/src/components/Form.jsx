@@ -5,20 +5,23 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/Form.css"
 
 function Form({ route, method }) {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
 
     const name = method === "login" ? "Авторизация" : "Регистрация";
-    const link = method === "login" ? "Нет аккаунта? Зарегестрируйтесь" : "Уже есть аккаунт? Авторизуйтесь";
+    const buttonName = method === "login" ? "Войти" : "Зарегистрироваться";
+    const link = method === "login" ? "Нет аккаунта? Зарегистрируйтесь" : "Уже есть аккаунт? Авторизуйтесь";
+    const recover = method ==="login" ? "Забыли пароль? Восстановить" : null;
 
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
 
         try {
-            const res = await api.post(route, { username, password })
+            const res = await api.post(route, { email, password })
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
@@ -27,13 +30,13 @@ function Form({ route, method }) {
                 navigate("/login")
             }
         } catch (error) {
-            alert(error)
+            setError(true);
         } finally {
             setLoading(false)
         }
     };
 
-    const handleButtonClick = (e) => {
+    const handleButtonClick = () => {
         if (method === "login") {
             navigate('/register');
         }
@@ -48,10 +51,10 @@ function Form({ route, method }) {
             <h1>{name}</h1>
             <input
                 className="form-input"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Логин"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Почта"
             />
             <input
                 className="form-input"
@@ -60,13 +63,17 @@ function Form({ route, method }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Пароль"
             />
-            {loading && <LoadingIndicator/>}
+            {error && <p className="error-text">Логин или пароль неверный</p>}
+            {/*{loading && <LoadingIndicator/>}*/}
             <button className="form-button" type="submit">
-                {name}
+                {buttonName}
             </button>
             <button className="form-button-link" onClick={handleButtonClick}>
                 {link}
             </button>
+            {recover && (<button className="form-button-recover" onClick={() => navigate('/recover')}>
+                {recover}
+            </button>)}
         </form>
     );
 }

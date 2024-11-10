@@ -10,7 +10,7 @@
     max-width: 400px;
     background-color:#F5F5F5;
     color: #000;
-    font-family: Arial;
+    font-family: Gill Sans, sans-serif;
 }
 
 .form-input {
@@ -37,9 +37,24 @@
 .form-button:hover {
     background-color: #0056b3;
 }
-.form-button-link{
+
+.form-button-link {
     background-color:#D3D3D3;
     padding: 5px 15px;
     border: 0;
-    border-radius:15px;
+    border-radius: 15px;
+}
+
+.form-button-recover {
+    background-color:#D3D3D3;
+    padding: 5px 15px;
+    border: 0;
+    border-radius: 15px;
+    margin-top: 7px;
+}
+
+.error-text {
+    color: red;
+    font-size: 15px;
+    margin: -4px 0;
 }
