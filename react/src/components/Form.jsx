@@ -14,7 +14,7 @@ function Form({ route, method }) {
     const name = method === "login" ? "Авторизация" : "Регистрация";
     const buttonName = method === "login" ? "Войти" : "Зарегистрироваться";
     const link = method === "login" ? "Нет аккаунта? Зарегистрируйтесь" : "Уже есть аккаунт? Авторизуйтесь";
-    const recover = method ==="login" ? "Забыли пароль? Восстановить" : null;
+    const recoverLink = method ==="login" ? "Забыли пароль? Восстановить" : null;
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -64,15 +64,15 @@ function Form({ route, method }) {
                 placeholder="Пароль"
             />
             {error && <p className="error-text">Логин или пароль неверный</p>}
-            {/*{loading && <LoadingIndicator/>}*/}
+            {/*{loading && <LoadingIndicator />}*/}
             <button className="form-button" type="submit">
                 {buttonName}
             </button>
             <button className="form-button-link" onClick={handleButtonClick}>
                 {link}
             </button>
-            {recover && (<button className="form-button-recover" onClick={() => navigate('/recover')}>
-                {recover}
+            {recoverLink && (<button className="form-button-recover" onClick={() => navigate('/recover')}>
+                {recoverLink}
             </button>)}
         </form>
     );
