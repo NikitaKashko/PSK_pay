@@ -149,8 +149,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'  # Например, smtp.yandex.ru
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_PORT = 2525
 EMAIL_HOST_USER = 'psk_pay@mail.ru'
-EMAIL_HOST_PASSWORD = 'a2dJkMADsDFXpr5NZBEY'
+EMAIL_HOST_PASSWORD = 'f0gs0vD1EpsLZhEkJUQR'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_DEBUG = True

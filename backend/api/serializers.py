@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.mail import send_mail
+from django.conf import settings
 import random
 import string
 
@@ -29,7 +30,7 @@ class PasswordResetSerializer(serializers.Serializer):
             user.save()
 
             # Отправка нового пароля на электронную почту
-            self.send_email(user.email, new_password)
+            self.send_email(user.username, new_password)
         except User.DoesNotExist:
             raise serializers.ValidationError(
                 "Пользователь с таким email не найден."
@@ -41,14 +42,16 @@ class PasswordResetSerializer(serializers.Serializer):
         return ''.join(random.choice(characters) for i in range(length))
 
     def send_email(self, email, new_password):
-        """Отправка email с новым паролем."""
-        subject = "Ваш новый пароль"
-        message = f"Ваш новый пароль: {new_password}"
-        from_email = 'psk_pay@mail.ru'
-        send_mail(
-            subject,
-            message,
-            from_email,
-            [email],
-            fail_silently=False
-        )
+        try:
+            subject = "Ваш новый пароль."
+            message = f"Драсьте, вы просили эт самое, пароль поменять. Ну так вот держите получайте. Ваш новый пароль: {new_password}"
+            from_email = settings.EMAIL_HOST_USER
+            print(send_mail(
+                subject,
+                message,
+                from_email,
+                [email],
+                fail_silently=False
+            ))
+        except Exception as e:
+            print(f"Ошибка при отправке письма: {e}")
