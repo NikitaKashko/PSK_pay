@@ -1,10 +1,10 @@
-import { useState } from "react";
+import {useState} from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import {useNavigate} from "react-router-dom";
+import {ACCESS_TOKEN, REFRESH_TOKEN} from "../constants";
 import "../styles/Form.css"
 
-function Form({ route, method }) {
+function Form({route, method}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -14,14 +14,14 @@ function Form({ route, method }) {
     const name = method === "login" ? "Авторизация" : "Регистрация";
     const buttonName = method === "login" ? "Войти" : "Зарегистрироваться";
     const link = method === "login" ? "Нет аккаунта? Зарегистрируйтесь" : "Уже есть аккаунт? Авторизуйтесь";
-    const recoverLink = method ==="login" ? "Забыли пароль? Восстановить" : null;
+    const recoverLink = method === "login" ? "Забыли пароль? Восстановить" : null;
 
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
 
         try {
-            const res = await api.post(route, { email, password })
+            const res = await api.post(route, {username: email, password})
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
@@ -39,8 +39,7 @@ function Form({ route, method }) {
     const handleButtonClick = () => {
         if (method === "login") {
             navigate('/register');
-        }
-        else{
+        } else {
             navigate('/login');
         }
     }

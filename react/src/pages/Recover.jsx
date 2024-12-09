@@ -1,6 +1,7 @@
 import "../styles/Recover.css"
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 function Recover() {
     const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function Recover() {
         setLoading(true);
 
         try {
-            //тут надо будет отправить запрос на бэк
+            await api.post("/api/password_reset/", {email: email});
             setMessage("На вашу почту отправлено письмо с инструкциями.");
         } catch (error) {
             setMessage("Ошибка при восстановлении пароля. Проверьте введенный email.");
@@ -27,7 +28,7 @@ function Recover() {
     return (
         <div className="recover-container">
             <h1>Восстановление пароля</h1>
-            <p>Введите адрес электронной почты, чтобы восстановить пароль.</p>
+            <p className="recover-p">Введите адрес электронной почты, чтобы восстановить пароль.</p>
             <form onSubmit={handleRecover}>
                 <input
                     type="email"
@@ -36,6 +37,7 @@ function Recover() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="recover-input"
                 />
+                {message && <p className="recover-message">{message}</p>}
                 <button type="submit" className="recover-button" disabled={loading}>
                     {loading ? "Отправка" : "Восстановить"}
                 </button>
@@ -45,7 +47,6 @@ function Recover() {
             }}>
                 {link}
             </button>
-            {message && <p className="recover-message">{message}</p>}
         </div>
     );
 }

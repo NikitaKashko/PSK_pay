@@ -23,7 +23,7 @@ class PasswordResetSerializer(serializers.Serializer):
     def save(self):
         email = self.validated_data['email']
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(username=email)
             new_password = self.generate_random_password()
             user.set_password(new_password)
             user.save()

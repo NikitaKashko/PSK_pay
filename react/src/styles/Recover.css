@@ -13,11 +13,11 @@
     font-family: Gill Sans, sans-serif;
 }
 
-.recover-container p {
+.recover-p {
     font-size: 18px;
     color: #333;
     text-align: center;
-    margin-top: -3px;
+    margin: -2px 0;
 }
 
 .recover-input {
@@ -58,7 +58,8 @@
 }
 
 .recover-message {
-    margin-top: 20px;
-    margin-bottom: 7px;
-    color: #555;
+    color: red;
+    font-size: 15px;
+    margin: -4px 0;
+    text-align: center;
 }
