@@ -5,19 +5,31 @@ import api from "../api";
 
 function Profile() {
     const [userData, setUserData] = useState(null);
-    const [editMode, setEditMode] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
+    const [setLoading] = useState(false);
     const [setError] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const res = await api.get("/api/profile/") //здесь будет нормальный запрос на бэк (мб рут поменяется)
+                const res = await api.get("/api/profile/");
                 if (res.status === 200) {
-                    setUserData(res.data);
+                    setUserData({
+                        firstName: res.data.first_name || "",
+                        secondName: res.data.second_name || "",
+                        username: res.data.username || "",
+                        birthDate: res.data.birth_date || "",
+                    });
+                    setFormData({
+                        firstName: res.data.first_name || "",
+                        secondName: res.data.second_name || "",
+                        username: res.data.username || "",
+                        birthDate: res.data.birth_date || "",
+                    });
                 } else {
-                    setUserData({email: ""});
+                    setUserData({username: ""});
                 }
             } catch (error) {
                 console.error("Ошибка при подгрузке данных с базы ", error);
@@ -29,6 +41,32 @@ function Profile() {
 
         fetchUserData();
     }, []);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSave = async () => {
+        try {
+            const res = await api.put("/api/profile/", {
+                first_name: formData.firstName,
+                second_name: formData.secondName,
+                birth_date: formData.birthDate,
+            });
+            if (res.status === 200) {
+                setUserData({
+                    firstName: res.data.first_name || "",
+                    secondName: res.data.second_name || "",
+                    username: res.data.username || "",
+                    birthDate: res.data.birth_date || "",
+                });
+                setIsEditing(false);
+            }
+        } catch (error) {
+            console.error("Ошибка при обновлении данных профиля:", error);
+        }
+    };
 
     const handleLogoutBtnClick = () => {
         navigate("/logout")
@@ -51,14 +89,48 @@ function Profile() {
                 </button>
             </div>
             <h1 className="header-text">Профиль</h1>
-            <div className="profile-box">
-                <p className="info-text"><div className="info-block"><b>ФИО:</b></div> {`${userData?.lastName || "Не указано"} ${userData?.firstName || "Не указано"} ${userData?.middleName || ""}`}</p>
-                <p className="info-text"><div className="info-block"><b>Дата рождения:</b></div>{userData?.birthDate || "Не указана"}</p>
-                <p className="info-text"><div className="info-block"><b>Номер
-                    телефона:</b></div> {userData?.phone || "Не указан"}</p>
-                <p className="info-text"><div className="info-block"><b>Email:</b></div> {userData?.email || "Не указан"}</p>
-                <button className="edit-button">Редактировать данные</button>
-            </div>
+            {isEditing ? (
+                <div className="edit-form">
+                    <label>
+                        Фамилия:
+                        <input
+                            type="text"
+                            name="secondName"
+                            value={formData.secondName || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <label>
+                        Имя:
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={formData.firstName || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <label>
+                        Дата рождения:
+                        <input
+                            type="date"
+                            name="birthDate"
+                            value={formData.birthDate || ""}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <p><b>Email:</b> {userData?.username || "Не указан"}</p>
+                    <button onClick={handleSave}>Сохранить</button>
+                    <button onClick={() => setIsEditing(false)}>Отмена</button>
+                </div>
+            ) : (
+                <div className="profile-view">
+                    <p><b>Фамилия:</b> {userData?.secondName || "Не указана"}</p>
+                    <p><b>Имя:</b> {userData?.firstName || "Не указано"}</p>
+                    <p><b>Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
+                    <p><b>Email:</b> {userData?.username || "Не указан"}</p>
+                    <button onClick={() => setIsEditing(true)}>Редактировать данные</button>
+                </div>
+            )}
         </div>
     );
 }

@@ -23,7 +23,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'second_name', 'username', 'birth_date']
+        fields = ['first_name', 'last_name', 'username', 'birth_date']
 
 
 class PasswordResetSerializer(serializers.Serializer):
@@ -53,8 +53,8 @@ class PasswordResetSerializer(serializers.Serializer):
         try:
             subject = "Ваш новый пароль."
             message = (
-                'Драсьте, вы просили эт самое, пароль поменять.',
-                'Ну так вот держите получайте.',
+                'Драсьте, вы просили эт самое, пароль поменять.'
+                'Ну так вот держите получайте.'
                 f'Ваш новый пароль: {new_password}'
             )
             from_email = settings.EMAIL_HOST_USER
