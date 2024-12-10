@@ -124,11 +124,11 @@ function Profile() {
                 </div>
             ) : (
                 <div className="profile-view">
-                    <p><b>Фамилия:</b> {userData?.secondName || "Не указана"}</p>
-                    <p><b>Имя:</b> {userData?.firstName || "Не указано"}</p>
-                    <p><b>Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
-                    <p><b>Email:</b> {userData?.username || "Не указан"}</p>
-                    <button onClick={() => setIsEditing(true)}>Редактировать данные</button>
+                    <p className="info-text"><b className="info-block">Фамилия:</b> {userData?.secondName || "Не указана"}</p>
+                    <p className="info-text"><b className="info-block">Имя:</b> {userData?.firstName || "Не указано"}</p>
+                    <p className="info-text"><b className="info-block">Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
+                    <p className="info-text"><b className="info-block">Email:</b> {userData?.username || "Не указан"}</p>
+                    <button className="edit-button" onClick={() => setIsEditing(true)}>Редактировать данные</button>
                 </div>
             )}
         </div>
