@@ -43,7 +43,7 @@ function Profile() {
     return (
         <div className="profile-container">
             <div className="header-area">
-                <button className="menu-button" onClick={handleMenuBtnClick}>
+                <button className="backmenu-button" onClick={handleMenuBtnClick}>
                     <p>На главную страницу</p>
                 </button>
                 <button className="logout-button" onClick={handleLogoutBtnClick}>

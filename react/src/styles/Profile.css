@@ -23,7 +23,7 @@
     height: 38px;
 }
 
-.menu-button{
+.backmenu-button{
     color: #fff;
     border-radius:20px;
     border: 1px solid #ccc;
@@ -35,7 +35,7 @@
     background-color: #2E8B57;
 }
 
-.menu-button:hover{
+.backmenu-button:hover{
     width: 210px;
     height: 40px;
     background-color: #0056b3;
