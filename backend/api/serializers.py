@@ -18,6 +18,14 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    birth_date = serializers.DateField(source='profile.birth_date')
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'second_name', 'username', 'birth_date']
+
+
 class PasswordResetSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
