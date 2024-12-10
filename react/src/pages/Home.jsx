@@ -12,9 +12,13 @@ function Home() {
         navigate("/profile")
     }
 
+    const handleHelpBtnClick = () => {
+        navigate("/help")
+    }
+
     return (
         <div className="home">
-            <div className="header-area">
+            <div className="header">
                 <button className="profile-button" onClick={handleProfileBtnClick}>
                     <p>Профиль</p>
                 </button>
@@ -35,6 +39,11 @@ function Home() {
                 </button>
                 <button className="menu-button">
                     <p>Посмотреть историю счетов</p>
+                </button>
+            </div>
+            <div className="help-section">
+                <button className="help-button" onClick={handleHelpBtnClick}>
+                    <p>Ответы на часто задаваемые вопросы</p>
                 </button>
             </div>
         </div>

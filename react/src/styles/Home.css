@@ -3,16 +3,16 @@
     margin-top:30px;
 }
 
-.header-area{
+.header{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: end;
     margin-bottom: 60px;
     padding: 0 80px;
 }
 
 .logout-button{
-    background-color:#696969;
+    background-color: #0f0f0f;
     color: #fff;
     border-radius:20px;
     border: 1px solid #ccc;
@@ -21,6 +21,10 @@
     font-weight: 550;
     width: 200px;
     height: 38px;
+}
+.logout-button:hover{
+    background-color: #0056b3;
+
 }
 
 .profile-button{
@@ -33,15 +37,11 @@
     width: 200px;
     height: 38px;
     background-color: #2E8B57;
+    margin-right:6px;
 }
-
 .profile-button:hover{
-    width: 210px;
-    height: 40px;
     background-color: #0056b3;
-    color: #fff;
 }
-
 .header-text{
     text-align: center;
     margin-bottom: 50px;
@@ -63,14 +63,25 @@
     border: 1px solid #ccc;
     font-family: Gill Sans, sans-serif;
     font-size: 17px;
-    background-color: #2E8B57;
-    color: white;
+    background-color: #696969;
+    color: #fff;
     font-weight: bold;
 }
 
 .menu-button:hover{
-    width: 820px;
-    height: 90px;
-    background-color: #0056b3;
+    background-color: #2E8B57;
     color: #fff;
+}
+.help-section{
+    margin:210px;
+    display: flex;
+    justify-content: center;
+}
+.help-button{
+    width:340px;
+    height:60px;
+    background-color: #0f0f0f;
+    color:#fff;
+    font-family: Gill Sans, sans-serif;
+    font-size: 15px;
 }

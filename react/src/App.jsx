@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Recover from "./pages/Recover.jsx";
 import Profile from "./pages/Profile.jsx";
+import Help from "./pages/Help.jsx";
 
 function Logout(){
     localStorage.clear();
@@ -43,6 +44,7 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route path="/help" element={<Help />} />
                 <Route path="*" element={<NotFound />}></Route>
             </Routes>
         </BrowserRouter>

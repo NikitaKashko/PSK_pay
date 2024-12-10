@@ -12,7 +12,7 @@
 }
 
 .logout-button{
-    background-color:#696969;
+    background-color:#0f0f0f;
     color: #fff;
     border-radius:20px;
     border: 1px solid #ccc;
@@ -36,8 +36,6 @@
 }
 
 .backmenu-button:hover{
-    width: 210px;
-    height: 40px;
     background-color: #0056b3;
     color: #fff;
 }
