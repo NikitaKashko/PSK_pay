@@ -19,6 +19,7 @@ function Recover() {
             await api.post("/api/password_reset/", {email: email});
             setMessage("На вашу почту отправлено письмо с инструкциями.");
         } catch (error) {
+            console.error(error);
             setMessage("Ошибка при восстановлении пароля. Проверьте введенный email.");
         } finally {
             setLoading(false);

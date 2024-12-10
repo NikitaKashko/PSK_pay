@@ -30,6 +30,7 @@ function Form({route, method}) {
                 navigate("/login")
             }
         } catch (error) {
+            console.error("Ошибка ", error);
             setError(true);
         } finally {
             setLoading(false)

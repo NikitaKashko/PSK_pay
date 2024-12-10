@@ -1,4 +1,4 @@
-.home{
+.profile-container {
     font-family: Gill Sans, sans-serif;
     margin-top:30px;
 }
@@ -23,7 +23,7 @@
     height: 38px;
 }
 
-.profile-button{
+.backmenu-button{
     color: #fff;
     border-radius:20px;
     border: 1px solid #ccc;
@@ -35,7 +35,7 @@
     background-color: #2E8B57;
 }
 
-.profile-button:hover{
+.backmenu-button:hover{
     width: 210px;
     height: 40px;
     background-color: #0056b3;
@@ -45,32 +45,4 @@
 .header-text{
     text-align: center;
     margin-bottom: 50px;
-}
-
-.menu-buttons{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.menu-button{
-    width: 810px;
-    height: 70px;
-    margin: 10px;
-    border-radius:20px;
-    border: 1px solid #ccc;
-    font-family: Gill Sans, sans-serif;
-    font-size: 17px;
-    background-color: #2E8B57;
-    color: white;
-    font-weight: bold;
-}
-
-.menu-button:hover{
-    width: 820px;
-    height: 90px;
-    background-color: #0056b3;
-    color: #fff;
 }
