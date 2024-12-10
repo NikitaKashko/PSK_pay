@@ -8,16 +8,23 @@ function Home() {
         navigate("/logout")
     }
 
+    const handleProfileBtnClick = () => {
+        navigate("/profile")
+    }
+
     return (
         <div className="home">
-            <div className="logout-area">
-                <button className="logout-button" onClick={handleLogoutBtnClick} >
+            <div className="header-area">
+                <button className="profile-button" onClick={handleProfileBtnClick}>
+                    <p>Профиль</p>
+                </button>
+                <button className="logout-button" onClick={handleLogoutBtnClick}>
                     <p>Выйти из аккаунта</p>
                 </button>
             </div>
             <h2 className="header-text">Здравствуйте! Выберите, что Вы хотите сделать</h2>
             <div className="menu-buttons">
-                <button className="menu-button">
+            <button className="menu-button">
                     <p>Посмотреть счета к оплате</p>
                 </button>
                 <button className="menu-button">
