@@ -51,11 +51,12 @@ function Profile() {
                 </button>
             </div>
             <h1 className="header-text">Профиль</h1>
-            <div>
-                <p><b>ФИО:</b> {`${userData?.lastName || "Не указано"} ${userData?.firstName || "Не указано"} ${userData?.middleName || ""}`}</p>
-                <p><b>Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
-                <p><b>Номер телефона:</b> {userData?.phone || "Не указан"}</p>
-                <p><b>Email:</b> {userData?.email || "Не указан"}</p>
+            <div className="profile-box">
+                <p className="info-text"><div className="info-block"><b>ФИО:</b></div> {`${userData?.lastName || "Не указано"} ${userData?.firstName || "Не указано"} ${userData?.middleName || ""}`}</p>
+                <p className="info-text"><div className="info-block"><b>Дата рождения:</b></div>{userData?.birthDate || "Не указана"}</p>
+                <p className="info-text"><div className="info-block"><b>Номер
+                    телефона:</b></div> {userData?.phone || "Не указан"}</p>
+                <p className="info-text"><div className="info-block"><b>Email:</b></div> {userData?.email || "Не указан"}</p>
                 <button className="edit-button">Редактировать данные</button>
             </div>
         </div>
