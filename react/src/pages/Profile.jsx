@@ -18,18 +18,18 @@ function Profile() {
                 if (res.status === 200) {
                     setUserData({
                         firstName: res.data.first_name || "",
-                        secondName: res.data.second_name || "",
-                        username: res.data.email || "",
+                        secondName: res.data.last_name || "",
+                        email: res.data.email || "",
                         birthDate: res.data.birth_date || "",
                     });
                     setFormData({
                         firstName: res.data.first_name || "",
-                        secondName: res.data.second_name || "",
-                        username: res.data.email || "",
+                        secondName: res.data.last_name || "",
+                        email: res.data.email || "",
                         birthDate: res.data.birth_date || "",
                     });
                 } else {
-                    setUserData({username: ""});
+                    setUserData({email: ""});
                 }
             } catch (error) {
                 console.error("Ошибка при подгрузке данных с базы ", error);
@@ -51,14 +51,14 @@ function Profile() {
         try {
             const res = await api.put("/api/profile/", {
                 first_name: formData.firstName,
-                second_name: formData.secondName,
+                last_name: formData.secondName,
                 birth_date: formData.birthDate,
             });
             if (res.status === 200) {
                 setUserData({
                     firstName: res.data.first_name || "",
-                    secondName: res.data.second_name || "",
-                    username: res.data.email || "",
+                    secondName: res.data.last_name || "",
+                    email: res.data.email || "",
                     birthDate: res.data.birth_date || "",
                 });
                 setIsEditing(false);
@@ -87,13 +87,6 @@ function Profile() {
                 </button>
             </div>
             <h1 className="header-text">Профиль</h1>
-            <div>
-                <p><b>ФИО:</b> {`${userData?.lastName || "Не указано"} ${userData?.firstName || "Не указано"} ${userData?.middleName || ""}`}</p>
-                <p><b>Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
-                <p><b>Номер телефона:</b> {userData?.phone || "Не указан"}</p>
-                <p><b>Email:</b> {userData?.email || "Не указан"}</p>
-                <button className="edit-button">Редактировать данные</button>
-            </div>
             {isEditing ? (
                 <div className="edit-form">
                     <label>
@@ -123,7 +116,7 @@ function Profile() {
                             onChange={handleInputChange}
                         />
                     </label>
-                    <p><b>Email:</b> {userData?.username || "Не указан"}</p>
+                    <p><b>Email:</b> {userData?.email || "Не указан"}</p>
                     <button onClick={handleSave}>Сохранить</button>
                     <button onClick={() => setIsEditing(false)}>Отмена</button>
                 </div>
@@ -132,7 +125,7 @@ function Profile() {
                     <p className="info-text"><b className="info-block">Фамилия:</b> {userData?.secondName || "Не указана"}</p>
                     <p className="info-text"><b className="info-block">Имя:</b> {userData?.firstName || "Не указано"}</p>
                     <p className="info-text"><b className="info-block">Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
-                    <p className="info-text"><b className="info-block">Email:</b> {userData?.username || "Не указан"}</p>
+                    <p className="info-text"><b className="info-block">Email:</b> {userData?.email || "Не указан"}</p>
                     <button className="edit-button" onClick={() => setIsEditing(true)}>Редактировать данные</button>
                 </div>
             )}
