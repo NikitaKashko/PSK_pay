@@ -10,11 +10,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password"]
-        extra_kwargs = {"password": {"write_only": True}}
+        extra_kwargs = {
+            "password": {"write_only": True},
+        }
 
     def create(self, validated_data):
         print(validated_data)
         user = User.objects.create_user(**validated_data)
+        user.email = validated_data['username']
+        user.save()
         return user
 
 
@@ -23,7 +27,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'birth_date']
+        fields = ['first_name', 'last_name', 'email', 'birth_date']
 
 
 class PasswordResetSerializer(serializers.Serializer):
@@ -32,13 +36,13 @@ class PasswordResetSerializer(serializers.Serializer):
     def save(self):
         email = self.validated_data['email']
         try:
-            user = User.objects.get(username=email)
+            user = User.objects.get(email=email)
             new_password = self.generate_random_password()
             user.set_password(new_password)
             user.save()
 
             # Отправка нового пароля на электронную почту
-            self.send_email(user.username, new_password)
+            self.send_email(user.email, new_password)
         except User.DoesNotExist:
             raise serializers.ValidationError(
                 "Пользователь с таким email не найден."
