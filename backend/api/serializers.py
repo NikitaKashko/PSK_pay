@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.mail import send_mail
 from django.conf import settings
+from .models import Profile
 import random
 import string
 
@@ -10,11 +11,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password"]
-        extra_kwargs = {"password": {"write_only": True}}
+        extra_kwargs = {
+            "password": {"write_only": True},
+        }
 
     def create(self, validated_data):
         print(validated_data)
         user = User.objects.create_user(**validated_data)
+        user.email = validated_data['username']
+        user.save()
+        Profile.objects.create(user=user)
         return user
 
 
@@ -23,7 +29,22 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'birth_date']
+        fields = ['first_name', 'last_name', 'email', 'birth_date']
+
+    def update(self, instance, validated_data):
+        print("Validated data:", validated_data)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+
+        instance.save()
+
+        profile_instance = instance.profile
+        profile_instance.birth_date = validated_data['profile'].get('birth_date', profile_instance.birth_date)
+        
+        profile_instance.save()
+
+        return instance
 
 
 class PasswordResetSerializer(serializers.Serializer):
@@ -32,13 +53,13 @@ class PasswordResetSerializer(serializers.Serializer):
     def save(self):
         email = self.validated_data['email']
         try:
-            user = User.objects.get(username=email)
+            user = User.objects.get(email=email)
             new_password = self.generate_random_password()
             user.set_password(new_password)
             user.save()
 
             # Отправка нового пароля на электронную почту
-            self.send_email(user.username, new_password)
+            self.send_email(user.email, new_password)
         except User.DoesNotExist:
             raise serializers.ValidationError(
                 "Пользователь с таким email не найден."

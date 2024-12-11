@@ -18,18 +18,18 @@ function Profile() {
                 if (res.status === 200) {
                     setUserData({
                         firstName: res.data.first_name || "",
-                        secondName: res.data.second_name || "",
-                        username: res.data.username || "",
+                        secondName: res.data.last_name || "",
+                        email: res.data.email || "",
                         birthDate: res.data.birth_date || "",
                     });
                     setFormData({
                         firstName: res.data.first_name || "",
-                        secondName: res.data.second_name || "",
-                        username: res.data.username || "",
+                        secondName: res.data.last_name || "",
+                        email: res.data.email || "",
                         birthDate: res.data.birth_date || "",
                     });
                 } else {
-                    setUserData({username: ""});
+                    setUserData({email: ""});
                 }
             } catch (error) {
                 console.error("Ошибка при подгрузке данных с базы ", error);
@@ -51,14 +51,14 @@ function Profile() {
         try {
             const res = await api.put("/api/profile/", {
                 first_name: formData.firstName,
-                second_name: formData.secondName,
+                last_name: formData.secondName,
                 birth_date: formData.birthDate,
             });
             if (res.status === 200) {
                 setUserData({
                     firstName: res.data.first_name || "",
-                    secondName: res.data.second_name || "",
-                    username: res.data.username || "",
+                    secondName: res.data.last_name || "",
+                    email: res.data.email || "",
                     birthDate: res.data.birth_date || "",
                 });
                 setIsEditing(false);
@@ -75,8 +75,6 @@ function Profile() {
     const handleMenuBtnClick = () => {
         navigate("/")
     }
-
-    //надо будет еще сделать editMode - поменять поля на измененяемые, отправить запрос на бэк для редактирования инфы
 
     return (
         <div className="profile-container">
@@ -118,7 +116,7 @@ function Profile() {
                             onChange={handleInputChange}
                         />
                     </label>
-                    <p><b>Email:</b> {userData?.username || "Не указан"}</p>
+                    <p><b>Email:</b> {userData?.email || "Не указан"}</p>
                     <button onClick={handleSave}>Сохранить</button>
                     <button onClick={() => setIsEditing(false)}>Отмена</button>
                 </div>
@@ -127,7 +125,7 @@ function Profile() {
                     <p className="info-text"><b className="info-block">Фамилия:</b> {userData?.secondName || "Не указана"}</p>
                     <p className="info-text"><b className="info-block">Имя:</b> {userData?.firstName || "Не указано"}</p>
                     <p className="info-text"><b className="info-block">Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
-                    <p className="info-text"><b className="info-block">Email:</b> {userData?.username || "Не указан"}</p>
+                    <p className="info-text"><b className="info-block">Email:</b> {userData?.email || "Не указан"}</p>
                     <button className="edit-button" onClick={() => setIsEditing(true)}>Редактировать данные</button>
                 </div>
             )}

@@ -30,3 +30,10 @@ class UserProfileView(views.APIView):
     def get(self, request):
         serializer = UserProfileSerializer(request.user)
         return Response(serializer.data)
+
+    def put(self, request, *args, **kwargs):
+        serializer = UserProfileSerializer(data=request.data, instance=request.user)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+ 
+        return Response({"post": serializer.data})
