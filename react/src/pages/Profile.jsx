@@ -19,13 +19,13 @@ function Profile() {
                     setUserData({
                         firstName: res.data.first_name || "",
                         secondName: res.data.second_name || "",
-                        username: res.data.username || "",
+                        username: res.data.email || "",
                         birthDate: res.data.birth_date || "",
                     });
                     setFormData({
                         firstName: res.data.first_name || "",
                         secondName: res.data.second_name || "",
-                        username: res.data.username || "",
+                        username: res.data.email || "",
                         birthDate: res.data.birth_date || "",
                     });
                 } else {
@@ -58,7 +58,7 @@ function Profile() {
                 setUserData({
                     firstName: res.data.first_name || "",
                     secondName: res.data.second_name || "",
-                    username: res.data.username || "",
+                    username: res.data.email || "",
                     birthDate: res.data.birth_date || "",
                 });
                 setIsEditing(false);
@@ -89,15 +89,13 @@ function Profile() {
                 </button>
             </div>
             <h1 className="header-text">Профиль</h1>
-<<<<<<< HEAD
             <div>
                 <p><b>ФИО:</b> {`${userData?.lastName || "Не указано"} ${userData?.firstName || "Не указано"} ${userData?.middleName || ""}`}</p>
                 <p><b>Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
                 <p><b>Номер телефона:</b> {userData?.phone || "Не указан"}</p>
-                <p><b>Email:</b> {userData?.username || "Не указан"}</p>
+                <p><b>Email:</b> {userData?.email || "Не указан"}</p>
                 <button className="edit-button">Редактировать данные</button>
             </div>
-=======
             {isEditing ? (
                 <div className="edit-form">
                     <label>
@@ -140,7 +138,6 @@ function Profile() {
                     <button className="edit-button" onClick={() => setIsEditing(true)}>Редактировать данные</button>
                 </div>
             )}
->>>>>>> 00786ecee3c02cbf9de524390fa6e5a76aa3976b
         </div>
     );
 }
