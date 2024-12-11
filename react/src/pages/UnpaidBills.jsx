@@ -1,36 +1,38 @@
-import "../styles/BillsHistory.css"
+import "../styles/UnpaidBills.css"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api.js";
 import Bill from "../components/Bill.jsx";
 
-function BillsHistory(){
-    const [bills, setBills] = useState([]);
-    const [filters, setFilters] = useState({
-        month: new Date().toISOString().slice(0, 7),
-    });
+function UnpaidBills() {
+    const [unpaidBills, setUnpaidBills] = useState([]);
     const [setLoading] = useState(false);
     const [setError] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchBills = async () => {
+        const fetchUnpaidBills = async () => {
             try {
-                const res = await api.get("/api/bills/history/", { params: filters });
-                setBills(res.data);
+                const res = await api.get("/api/bills/unpaid/");
+                setUnpaidBills(res.data);
             } catch (error) {
-                console.error("Ошибка при подгрузке счетов с базы ", error);
+                console.error("Ошибка при подгрузке неполаченных счетов с базы ", error);
                 setError(true);
             } finally {
                 setLoading(false)
             }
         };
 
-        fetchBills();
-    }, [filters]);
+        fetchUnpaidBills();
+    }, []);
 
-    const handleFilterChange = (e) => {
-        setFilters({ ...filters, [e.target.name]: e.target.value });
+    const handlePayment = async (billId) => {
+        try {
+            await api.post(`/api/bills/${billId}/pay`); // мб поменяется ?
+            setUnpaidBills((prevBills) => prevBills.filter((bill) => bill.id !== billId));
+        } catch (err) {
+            console.error("Ошибка при оплате счета:", err);
+        }
     };
 
     const handleLogoutBtnClick = () => {
@@ -42,7 +44,7 @@ function BillsHistory(){
     }
 
     return (
-        <div className="billshistory-container">
+        <div className="unpaidbills-container">
             <div className="header-area">
                 <button className="backmenu-button" onClick={handleMenuBtnClick}>
                     <p>На главную страницу</p>
@@ -51,21 +53,11 @@ function BillsHistory(){
                     <p>Выйти из аккаунта</p>
                 </button>
             </div>
-            <div className="billshistory-content">
-                <h1 className="billshistory-title">История</h1>
-                <div className="filters">
-                    <label htmlFor="month">Выберите месяц:</label>
-                    <input
-                        type="month"
-                        id="month"
-                        name="month"
-                        value={filters.month}
-                        onChange={handleFilterChange}
-                    />
-                </div>
-                <div className="billshistory-container">
-                    {bills.length > 0 ? (
-                        bills.map((bill) => (
+            <div className="unpaidbills-content">
+                <h1 className="unpaidbills-title">Счета к оплате</h1>
+                <div className="unpaid-bills-container">
+                    {unpaidBills.length > 0 ? (
+                        unpaidBills.map((bill) => (
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
@@ -75,10 +67,11 @@ function BillsHistory(){
                                 amount={bill.amount}
                                 pdfUrl={bill.pdfUrl}
                                 isPaid={bill.isPaid}
+                                onPay={handlePayment}
                             />
                         ))
                     ) : (
-                        <p>Счета за выбранный период отсутствуют</p>
+                        <p>Нет неоплаченных счетов</p>
                     )}
                 </div>
             </div>
@@ -86,4 +79,4 @@ function BillsHistory(){
     );
 }
 
-export default BillsHistory;
+export default UnpaidBills;
