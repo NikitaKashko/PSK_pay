@@ -44,3 +44,42 @@
     text-align: center;
     margin-bottom: 50px;
 }
+.profile-view{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+.info-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f0f0f;
+    color: #fff;
+    width:500px;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+
+}
+.info-text{
+    text-align: center;
+    border: 2px solid #0f0f0f;
+    border-radius: 10px;
+    height:70px;
+}
+.edit-button{
+    margin-top: 60px;
+    width: 300px;
+    height: 50px;
+    border-radius:20px;
+    border: 1px solid #ccc;
+    font-family: Gill Sans, sans-serif;
+    font-size: 16px;
+    font-weight: 550;
+    background-color: #2E8B57;
+    color: #fff;
+}
+.edit-button:hover{
+    background-color: #0056b3;
+}
