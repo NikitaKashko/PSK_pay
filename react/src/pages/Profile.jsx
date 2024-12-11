@@ -56,10 +56,10 @@ function Profile() {
             });
             if (res.status === 200) {
                 setUserData({
-                    firstName: res.data.first_name || "",
-                    secondName: res.data.last_name || "",
-                    email: res.data.email || "",
-                    birthDate: res.data.birth_date || "",
+                    firstName: formData.firstName,
+                    secondName: formData.secondName,
+                    email: userData.email,
+                    birthDate: formData.birthDate,
                 });
                 setIsEditing(false);
             }
