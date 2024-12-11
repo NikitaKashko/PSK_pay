@@ -28,6 +28,10 @@ function Home() {
         navigate("/meter-readings")
     }
 
+    const handleMeterHistoryBtnClick = () => {
+        navigate("/meter-history")
+    }
+
     return (
         <div className="home">
             <div className="header">
@@ -40,10 +44,13 @@ function Home() {
             </div>
             <h2 className="header-text">Здравствуйте! Выберите, что Вы хотите сделать</h2>
             <div className="menu-buttons">
-            <button className="menu-button" onClick={handleUnpaidBillsBtnClick}>
+                <button className="menu-button" onClick={handleUnpaidBillsBtnClick}>
                     <p>Посмотреть счета к оплате</p>
                 </button>
                 <button className="menu-button" onClick={handleMeterReadingsBtnClick}>
+                    <p>Передать показания</p>
+                </button>
+                <button className="menu-button" onClick={handleMeterHistoryBtnClick}>
                     <p>Посмотреть историю показаний</p>
                 </button>
                 <button className="menu-button" onClick={handleBillsHistoryBtnClick}>
