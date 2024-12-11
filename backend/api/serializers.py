@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.mail import send_mail
 from django.conf import settings
+from .models import Profile
 import random
 import string
 
@@ -19,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         user.email = validated_data['username']
         user.save()
+        Profile.objects.create(user=user)
         return user
 
 
@@ -28,6 +30,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'birth_date']
+
+    def update(self, instance, validated_data):
+        print("Validated data:", validated_data)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+
+        instance.save()
+
+        profile_instance = instance.profile
+        profile_instance.birth_date = validated_data['profile'].get('birth_date', profile_instance.birth_date)
+        
+        profile_instance.save()
+
+        return instance
 
 
 class PasswordResetSerializer(serializers.Serializer):
