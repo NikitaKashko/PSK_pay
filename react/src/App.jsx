@@ -10,7 +10,6 @@ import Help from "./pages/Help.jsx";
 import UnpaidBills from "./pages/UnpaidBills.jsx";
 import BillsHistory from "./pages/BillsHistory.jsx";
 import MeterReadings from "./pages/MeterReadings.jsx";
-import PaymentHistory from "./pages/PaymentHistory.jsx";
 
 function Logout(){
     localStorage.clear();
@@ -60,14 +59,6 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <BillsHistory />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/payment-history"
-                    element={
-                        <ProtectedRoute>
-                            <PaymentHistory />
                         </ProtectedRoute>
                     }
                 />

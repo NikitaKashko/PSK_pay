@@ -8,6 +8,7 @@ function BillsHistory(){
     const [bills, setBills] = useState([]);
     const [filters, setFilters] = useState({
         month: new Date().toISOString().slice(0, 7),
+        accountNumber: "",
     });
     const [setLoading] = useState(false);
     const [setError] = useState(false);
@@ -62,6 +63,15 @@ function BillsHistory(){
                         value={filters.month}
                         onChange={handleFilterChange}
                     />
+                    <label htmlFor="accountNumber">Введите номер лицевого счёта:</label>
+                    <input
+                        type="text"
+                        id="accountNumber"
+                        name="accountNumber"
+                        value={filters.accountNumber}
+                        placeholder="Лицевой счёт"
+                        onChange={handleFilterChange}
+                    />
                 </div>
                 <div className="billshistory-container">
                     {bills.length > 0 ? (
@@ -78,7 +88,7 @@ function BillsHistory(){
                             />
                         ))
                     ) : (
-                        <p>Счета за выбранный период отсутствуют</p>
+                        <p>Счета за выбранный период и/или по введенному лицевому счету отсутствуют</p>
                     )}
                 </div>
             </div>

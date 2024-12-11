@@ -24,10 +24,6 @@ function Home() {
         navigate("/bills-history")
     }
 
-    const handlePaymentHistoryBtnClick = () => {
-        navigate("/payment-history")
-    }
-
     const handleMeterReadingsBtnClick = () => {
         navigate("/meter-readings")
     }
@@ -49,9 +45,6 @@ function Home() {
                 </button>
                 <button className="menu-button" onClick={handleMeterReadingsBtnClick}>
                     <p>Посмотреть историю показаний</p>
-                </button>
-                <button className="menu-button" onClick={handlePaymentHistoryBtnClick}>
-                    <p>Посмотреть историю платежей</p>
                 </button>
                 <button className="menu-button" onClick={handleBillsHistoryBtnClick}>
                     <p>Посмотреть историю счетов</p>
