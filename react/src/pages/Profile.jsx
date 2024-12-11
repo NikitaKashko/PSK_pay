@@ -76,8 +76,6 @@ function Profile() {
         navigate("/")
     }
 
-    //надо будет еще сделать editMode - поменять поля на измененяемые, отправить запрос на бэк для редактирования инфы
-
     return (
         <div className="profile-container">
             <div className="header-area">
