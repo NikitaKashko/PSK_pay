@@ -1,6 +1,7 @@
 #virtual environments
 venv/
-
+# DataBases
+*.sqlite3
 # Logs
 logs
 *.log
