@@ -8,6 +8,10 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Recover from "./pages/Recover.jsx";
 import Profile from "./pages/Profile.jsx";
 import Help from "./pages/Help.jsx";
+import Bills from "./pages/Bills.jsx";
+import BillsHistory from "./pages/BillsHistory.jsx";
+import MeterReadings from "./pages/MeterReadings.jsx";
+import PaymentHistory from "./pages/PaymentHistory.jsx";
 
 function Logout(){
     localStorage.clear();
@@ -44,6 +48,10 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route path="/bills" element={<Bills />} />
+                <Route path="/bills-history" element={<BillsHistory />} />
+                <Route path="/meter-readings" element={<MeterReadings />} />
+                <Route path="/payment-history" element={<PaymentHistory />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="*" element={<NotFound />}></Route>
             </Routes>
