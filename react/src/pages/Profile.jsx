@@ -55,7 +55,7 @@ function Profile() {
                 <p><b>ФИО:</b> {`${userData?.lastName || "Не указано"} ${userData?.firstName || "Не указано"} ${userData?.middleName || ""}`}</p>
                 <p><b>Дата рождения:</b> {userData?.birthDate || "Не указана"}</p>
                 <p><b>Номер телефона:</b> {userData?.phone || "Не указан"}</p>
-                <p><b>Email:</b> {userData?.email || "Не указан"}</p>
+                <p><b>Email:</b> {userData?.username || "Не указан"}</p>
                 <button className="edit-button">Редактировать данные</button>
             </div>
         </div>
