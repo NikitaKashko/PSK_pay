@@ -3,8 +3,8 @@ from rest_framework import generics, views
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from .serializers import PasswordResetSerializer, UserProfileSerializer, BillsSerializer, MeterSerializer
-from .models import Bill, Profile, Meter
+from .serializers import PasswordResetSerializer, UserProfileSerializer, BillsSerializer, MeterSerializer, CardsSerializer
+from .models import Bill, Profile, Meter, CreditCard
 from django.utils import timezone
 from datetime import datetime
 from rest_framework import status
@@ -71,9 +71,18 @@ class BillsUnpaidListView(views.APIView):
 
     def get(self, request):
         user = request.user
-        bills = Bill.objects.filter(userId=user, isPaid=False)
+        bills = Bill.objects.filter(accountNumber=Profile.objects.get(user_id=user).account_number, isPaid=False)
 
         serializer = BillsSerializer(bills, many=True)
+        return Response(serializer.data)
+
+
+class BillsUnpaidView(views.APIView):
+
+    def get(self, request, pk):
+        bill = Bill.objects.get(pk=pk)
+
+        serializer = BillsSerializer(bill)
         return Response(serializer.data)
 
 
@@ -123,13 +132,11 @@ class MeterView(views.APIView):
                 last_meter = Meter.objects.get(accountNumber=account_number)
 
             except Meter.DoesNotExist:
-                print('kakashki')
                 data_bill['amount'] = data_day * 10.5 + data_night * 15.5
                 serializer_bill = BillsSerializer(data=data_bill)
                 serializer_bill.is_valid(raise_exception=True)
                 serializer_bill.save()
             except Meter.MultipleObjectsReturned:
-                print('govnyashki')
                 latest_meter = Meter.objects.filter(accountNumber=account_number).latest('date')
                 day = latest_meter.dayMeter
                 night = latest_meter.nightMeter
@@ -141,7 +148,6 @@ class MeterView(views.APIView):
                 else:
                     return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
             else:
-                print('pisi i popy')
                 day = last_meter.dayMeter
                 night = last_meter.nightMeter
                 if not (data_day < day or data_night < night):
@@ -153,7 +159,33 @@ class MeterView(views.APIView):
                     return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
 
             serializer_meter.save()
-            
+
             return Response(serializer_meter.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer_meter.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CreditsView(views.APIView):
+    def get(self, request):
+        user = request.user
+        cards = CreditCard.objects.filter(user_id=user)
+        serializer = CardsSerializer(cards, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        user = request.user
+        print(user)
+        data = {
+            'card_number': request.data['method'],
+            'user_id': user.id
+        }
+        serializer = CardsSerializer(data=data)
+        serializer.is_valid()
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, pk):
+        card_to_delete = CreditCard.objects.get(pk=pk)
+        card_to_delete.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

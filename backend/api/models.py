@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 class Profile(models.Model):
@@ -13,7 +14,6 @@ class Profile(models.Model):
 
 class Bill(models.Model):
     date = models.DateField()
-    userId = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     accountNumber = models.PositiveIntegerField(default=228)
     amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     pdUrl = models.URLField(default='https://vk.com/pechebka')
@@ -26,3 +26,14 @@ class Meter(models.Model):
     dayMeter = models.IntegerField()
     nightMeter = models.IntegerField()
     accountNumber = models.PositiveIntegerField()
+
+
+def validate_fixed_length(value):
+    if len(value) != 16:  # Замените 4 на нужное вам количество символов
+        raise ValidationError(f'Длина строки должна быть ровно 16 символа, но получено {len(value)}.')
+
+
+class CreditCard(models.Model):
+    card_number = models.CharField(max_length=16, validators=[validate_fixed_length])
+    balance = models.DecimalField(max_digits=12, decimal_places=2, default=100000.00)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
