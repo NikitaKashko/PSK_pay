@@ -109,10 +109,44 @@ class MeterView(views.APIView):
             'accountNumber': account_number
         }
 
-        serializer = MeterSerializer(data=data)
-        
-        if serializer.is_valid():
-            serializer.save()  # Сохраняем новую запись в базе данных
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer_meter = MeterSerializer(data=data)
+        if serializer_meter.is_valid():
+            serializer_meter.save()  # Сохраняем новую запись в базе данных
+            serializer_bill = BillsSerializer()
+            data_bill = {
+                'accountNumber': account_number,
+                'amount': 0,
+                'onPay': False
+            }
+            data_day = data['dayMeter']
+            data_night = data['nightMeter']
+            try:
+                last_meter = Meter.objects.get(accountNumber=account_number)
+
+            except Meter.DoesNotExist:
+                data_bill['amount'] = data_day * 10.5 + data_night * 15.5
+                serializer_bill(data_bill)
+                serializer_bill.save()
+            except Meter.MultipleObjectsReturned:
+                latest_meter = Meter.objects.filter(accountNumber=account_number).latest('date')
+                day = latest_meter.dayMeter
+                night = latest_meter.nightMeter
+                if not (data_day < day or data_night < night):
+                    data_bill['amount'] = (data_day - day) * 10.5 + (data_night - night) * 15.5
+                    serializer_bill(data_bill)
+                    serializer_bill.save()
+                else:
+                    return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                day = last_meter.dayMeter
+                night = last_meter.nightMeter
+                if not (data_day < day or data_night < night):
+                    data_bill['amount'] = (data_day - day) * 10.5 + (data_night - night) * 15.5
+                    serializer_bill(data_bill)
+                    serializer_bill.save()
+                else:
+                    return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(serializer_meter.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer_meter.errors, status=status.HTTP_400_BAD_REQUEST)

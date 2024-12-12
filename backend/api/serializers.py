@@ -30,7 +30,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'birth_date', ]
+        fields = ['first_name', 'last_name', 'email', 'birth_date', 'account_number']
 
     def update(self, instance, validated_data):
         print("Validated data:", validated_data)
