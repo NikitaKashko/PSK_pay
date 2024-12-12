@@ -2,17 +2,16 @@ import "../styles/PaymentPage.css";
 import { useEffect, useState } from "react";
 import api from "../api.js";
 import { useNavigate, useLocation } from "react-router-dom";
-//import QRCode from "qrcode.react";
 
 function PaymentPage() {
     const [billDetails, setBillDetails] = useState(null);
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [selectedMethod, setSelectedMethod] = useState("");
     const [newCard, setNewCard] = useState("");
+    const [showQrCode, setShowQrCode] = useState(false);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
-    const [qrCodeData, setQrCodeData] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -30,7 +29,7 @@ function PaymentPage() {
         const fetchPaymentMethods = async () => {
             try {
                 const res = await api.get("/api/payment-methods");
-                setPaymentMethods([...res.data, { id: "qr", method: "QR-код" }]);
+                setPaymentMethods([...res.data]);
             } catch (err) {
                 console.error("Ошибка при загрузке методов оплаты", err);
             }
@@ -61,7 +60,6 @@ function PaymentPage() {
     };
 
     const handleDeleteMethod = async (methodId) => {
-        if (methodId === "qr") return;
         setLoading(true);
         try {
             await api.delete(`/api/payment-methods/${methodId}`);
@@ -81,8 +79,7 @@ function PaymentPage() {
         setLoading(true);
         try {
             if (selectedMethod === "QR-код") {
-                const qrData = `PAYMENT:${billDetails.amount};ACCOUNT:${billDetails.accountNumber}`;
-                setQrCodeData(qrData);
+                setShowQrCode(true);
             } else {
                 await api.post("/api/bills/pay", { billId: billDetails.id, method: selectedMethod });
                 setSuccess(true);
@@ -140,12 +137,13 @@ function PaymentPage() {
                         value={selectedMethod}
                         onChange={(e) => setSelectedMethod(e.target.value)}
                     >
-                        <option value="">-- Выберите --</option>
+                        <option value="">Выберите</option>
                         {paymentMethods.map((method) => (
                             <option key={method.id} value={method.method}>
                                 {method.method}
                             </option>
                         ))}
+                        <option value={"QR-код"}>QR-код</option>
                     </select>
                 </label>
                 <button className="pay-btn" onClick={handlePay} disabled={loading}>
@@ -153,10 +151,10 @@ function PaymentPage() {
                 </button>
                 {success && <p className="success-message">Счёт успешно оплачен</p>}
                 {error && <p className="error-message">{error}</p>}
-                {qrCodeData && (
-                    <div className="qr-code-container">
+                {showQrCode && (
+                    <div>
                         <h3>Оплатите через QR-код:</h3>
-                        <QRCode value={qrCodeData} size={256} />
+                        <img src="../assets/qr-code.png" alt="QR-код" width="250"/>
                     </div>
                 )}
             </div>
