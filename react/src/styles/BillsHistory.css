@@ -4,6 +4,7 @@
     justify-content: space-between;
     padding: 20px;
     font-family:Gill Sans, sans-serif;
+
 }
 
 .header-area{
@@ -55,8 +56,9 @@
 }
 
 .bills-history-container {
+    display:flex;
     background-color: #fff;
-
+    flex-direction: column-reverse;
     border-radius: 10px;
     padding: 20px;
 }
