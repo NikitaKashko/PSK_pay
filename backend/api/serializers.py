@@ -21,6 +21,19 @@ class UserSerializer(serializers.ModelSerializer):
         user.email = validated_data['username']
         user.save()
         Profile.objects.create(user=user)
+        try:
+            subject = "Регистрация"
+            message = 'Регистрация прошла успешно'
+            from_email = settings.EMAIL_HOST_USER
+            print(send_mail(
+                subject,
+                message,
+                from_email,
+                [user.email],
+                fail_silently=False
+            ))
+        except Exception as e:
+            print(f"Ошибка при отправке письма: {e}")
         return user
 
 
