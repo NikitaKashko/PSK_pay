@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Profile
+from .models import Profile, Bill
 import random
 import string
 
@@ -88,3 +88,9 @@ class PasswordResetSerializer(serializers.Serializer):
             ))
         except Exception as e:
             print(f"Ошибка при отправке письма: {e}")
+
+
+class BillsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bill
+        fields = ['id', 'accountNumber', 'amount', 'pdUrl', 'isPaid', 'onPay']
