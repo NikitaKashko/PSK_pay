@@ -79,8 +79,7 @@ function BillsHistory(){
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
-                                month={bill.month}
-                                year={bill.year}
+                                date={bill.date}
                                 accountNumber={bill.accountNumber}
                                 amount={bill.amount}
                                 pdfUrl={bill.pdfUrl}
