@@ -104,7 +104,7 @@ function MeterReadings() {
                             required
                         />
                     </div>
-                    <button type="submit" disabled={loading}>
+                    <button className="send-readings" type="submit" disabled={loading}>
                         {loading ? "Отправка" : "Отправить показания"}
                     </button>
                 </form>

@@ -54,7 +54,7 @@ function BillsHistory(){
             </div>
             <div className="billshistory-content">
                 <h1 className="billshistory-title">История</h1>
-                <div className="filters">
+                <div className="bills-filters">
                     <label htmlFor="month">Выберите месяц:</label>
                     <input className="filter-input"
                         type="month"
@@ -73,7 +73,7 @@ function BillsHistory(){
                         onChange={handleFilterChange}
                     />
                 </div>
-                <div className="billshistory-container">
+                <div className="bills-history-container">
                     {bills.length > 0 ? (
                         bills.map((bill) => (
                             <Bill
