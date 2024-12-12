@@ -6,6 +6,8 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family:Gill Sans, sans-serif;
+    margin-top: 100px;
 }
 
 h1 {
@@ -47,4 +49,41 @@ h1 {
     color: red;
     text-align: center;
     margin-top: 10px;
+}
+.card-input{
+    border-radius:10px;
+    width:350px;
+    height:30px;
+    margin-right: 20px;
+}
+.add-card-btn{
+    color: #fff;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-family: Gill Sans, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    width: 200px;
+    height: 30px;
+    background-color: #0f0f0f;
+}
+.method-choice{
+    margin-right:30px;
+}
+.pay-btn{
+    color: #fff;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-family: Gill Sans, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    width: 200px;
+    height: 30px;
+    background-color: #2E8B57;
+}
+.choice-form{
+    margin-left: 10px;
+    border-radius: 10px;
+    width: 160px;
+    height: 20px;
 }

@@ -53,6 +53,7 @@ function UnpaidBills() {
                 <div className="unpaid-bills-container">
                     {unpaidBills.length > 0 ? (
                         unpaidBills.map((bill) => (
+                            <div className="bill-info">
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
@@ -63,6 +64,7 @@ function UnpaidBills() {
                                 isPaid={bill.isPaid}
                                 onPay={() => handleNavigateToPayment(bill)}
                             />
+                            </div>
                         ))
                     ) : (
                         <p>Нет неоплаченных счетов</p>

@@ -123,20 +123,20 @@ function PaymentPage() {
                         </li>
                     ))}
                 </ul>
-                <input
+                <input className="card-input"
                     type="text"
                     value={newCard}
                     placeholder="Добавить карту (16 цифр)"
                     onChange={(e) => setNewCard(e.target.value)}
                 />
-                <button onClick={handleAddCard} disabled={loading}>
+                <button className="add-card-btn" onClick={handleAddCard} disabled={loading}>
                     Добавить карту
                 </button>
             </div>
             <div className="payment-actions">
-                <label>
+                <label className="method-choice">
                     Выберите метод оплаты:
-                    <select
+                    <select className="choice-form"
                         value={selectedMethod}
                         onChange={(e) => setSelectedMethod(e.target.value)}
                     >
@@ -148,7 +148,7 @@ function PaymentPage() {
                         ))}
                     </select>
                 </label>
-                <button onClick={handlePay} disabled={loading}>
+                <button className="pay-btn" onClick={handlePay} disabled={loading}>
                     {loading ? "Оплата" : "Оплатить"}
                 </button>
                 {success && <p className="success-message">Счёт успешно оплачен</p>}
