@@ -189,3 +189,18 @@ class CreditsView(views.APIView):
         card_to_delete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class PaymentView(views.APIView):
+    def post(self, request):
+        data = request.data
+        print(data)
+        bill = Bill.objects.get(pk=data['billId'])
+        card = CreditCard.objects.get(card_number=data['method'])
+        if card.balance >= bill.amount:
+            card.balance = card.balance - bill.amount
+            bill.isPaid = True
+            card.save()
+            bill.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
