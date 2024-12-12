@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    font-family: Gill Sans, sans-serif;
 }
 
 .header-area{
@@ -97,6 +98,7 @@
     background-color: #fff;
     padding: 15px;
     text-align: center;
+    margin-top:250px;
 }
 
 .contact-box h3 {

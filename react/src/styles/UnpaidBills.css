@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    font-family:Gill Sans, sans-serif;
 }
 
 .header-area{
@@ -53,7 +54,7 @@
     text-align: center;
 }
 
-.unpaidbills-container {
+.unpaid-bills-container {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;

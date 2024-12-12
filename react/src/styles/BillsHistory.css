@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    font-family:Gill Sans, sans-serif;
 }
 
 .header-area{
@@ -65,6 +66,8 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    justify-content:space-around;
+
 }
 
 .filters label {
@@ -74,4 +77,9 @@
 .filters input {
     padding: 5px;
     font-size: 16px;
+}
+.filter-input{
+    border-radius:20px;
+    width:350px;
+    margin-right: 20px;
 }
