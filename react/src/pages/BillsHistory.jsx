@@ -42,6 +42,10 @@ function BillsHistory(){
         navigate("/")
     }
 
+    const handleNavigateToPayment = (bill) => {
+        navigate("/payment-page", {state: {bill}});
+    };
+
     return (
         <div className="billshistory-container">
             <div className="header-area">
@@ -79,12 +83,12 @@ function BillsHistory(){
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
-                                month={bill.month}
-                                year={bill.year}
+                                date={bill.date}
                                 accountNumber={bill.accountNumber}
                                 amount={bill.amount}
                                 pdfUrl={bill.pdfUrl}
                                 isPaid={bill.isPaid}
+                                onPay={() => handleNavigateToPayment(bill)}
                             />
                         ))
                     ) : (

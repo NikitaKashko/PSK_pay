@@ -2,8 +2,7 @@ import * as PropTypes from "prop-types";
 
 const Bill = ({
                   id,
-                  month,
-                  year,
+                  date,
                   accountNumber,
                   amount,
                   pdfUrl,
@@ -16,7 +15,7 @@ const Bill = ({
 
     return (
         <div className="bill-card">
-            <p><b>Счёт за:</b> {month} {year}</p>
+            <p><b>Счёт за:</b> {date}</p>
             <p><b>Лицевой счёт:</b> {accountNumber}</p>
             <p><b>Сумма:</b> {amount} ₽</p>
 
@@ -41,8 +40,7 @@ const Bill = ({
 
 Bill.propTypes = {
     id: PropTypes.number.isRequired,
-    month: PropTypes.string.isRequired,
-    year: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
     accountNumber: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
     pdfUrl: PropTypes.string,
