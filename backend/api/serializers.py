@@ -95,7 +95,7 @@ class PasswordResetSerializer(serializers.Serializer):
 class BillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
-        fields = ['id', 'accountNumber', 'amount', 'pdUrl', 'isPaid', 'onPay']
+        fields = ['id', 'date', 'accountNumber', 'amount', 'pdUrl', 'isPaid', 'onPay']
 
 
 class MeterSerializer(serializers.ModelSerializer):
