@@ -54,11 +54,11 @@
     text-align: center;
 }
 
-.metershistory-container {
+.meters-history-container {
     background-color: #fff;
-    border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
+
 }
 
 .filters {
@@ -81,4 +81,10 @@
     border-radius:20px;
     width:300px;
     margin-left:20px;
+}
+.meter-info{
+    border: 2px solid #0f0f0f;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding-left:20px;
 }

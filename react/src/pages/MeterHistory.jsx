@@ -63,19 +63,23 @@ function MeterHistory(){
                         onChange={handleFilterChange}
                     />
                 </div>
-                <div className="metershistory-container">
+                <div className="meters-history-container">
+
                     {meters.length > 0 ? (
                         meters.map((meter) => (
-                            <Meter
-                                date={meter.date}
-                                accountNumber={meter.accountNumber}
-                                dayMeter={meter.dayMeter}
-                                nightMeter={meter.nightMeter}
-                            />
+                            <div className="meter-info">
+                                <Meter
+                                    date={meter.date}
+                                    accountNumber={meter.accountNumber}
+                                    dayMeter={meter.dayMeter}
+                                    nightMeter={meter.nightMeter}
+                                />
+                            </div>
                         ))
                     ) : (
                         <p>Показания за выбранный период отсутствуют</p>
                     )}
+
                 </div>
             </div>
         </div>

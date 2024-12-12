@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    font-family: Gill Sans, sans-serif;;
 }
 
 .header-area{
@@ -55,7 +56,6 @@
 
 .meter-readings-container {
     background-color: #fff;
-    border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
 }
@@ -64,6 +64,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    justify-content: center;
 }
 
 .field {
@@ -102,13 +103,28 @@
     font-family: Gill Sans, sans-serif;
     font-size: 12px;
     font-weight: 550;
-    width: 250px;
+    width: 100%;
     height: 38px;
-    background-color: #2E8B57;
+    background-color: #0f0f0f;
     margin-top: 10px;
 }
 
 .unpaidbills-button:hover{
     background-color: #0056b3;
     color: #fff;
+}
+.send-readings{
+    color: #fff;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-family: Gill Sans, sans-serif;
+    font-size: 12px;
+    font-weight: 550;
+    width: 100%;
+    height: 38px;
+    background-color: #2E8B57;
+    margin-top: 10px;
+}
+.send-readings:hover{
+    background-color: #0056b3;
 }

@@ -54,27 +54,27 @@
     text-align: center;
 }
 
-.billshistory-container {
+.bills-history-container {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
 }
 
-.filters {
+.bills-filters {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
-    justify-content:space-around;
+    justify-content:space-between;
 
 }
 
-.filters label {
+.bills-filters label {
     font-weight: bold;
 }
 
-.filters input {
+.bills-filters input {
     padding: 5px;
     font-size: 16px;
 }
