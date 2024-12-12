@@ -42,7 +42,7 @@ class UserProfileView(views.APIView):
         return Response({"post": serializer.data})
 
 
-class BillListView(views.APIView):
+class BillsListView(views.APIView):
 
     def get(self, request):
         user = request.user
