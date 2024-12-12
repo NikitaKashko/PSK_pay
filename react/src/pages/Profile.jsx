@@ -89,36 +89,36 @@ function Profile() {
             <h1 className="header-text">Профиль</h1>
             {isEditing ? (
                 <div className="edit-form">
-                    <label>
+                    <label className="edit-block">
                         Фамилия:
-                        <input
+                        <input className="edit-input"
                             type="text"
                             name="secondName"
                             value={formData.secondName || ""}
                             onChange={handleInputChange}
                         />
                     </label>
-                    <label>
+                    <label className="edit-block">
                         Имя:
-                        <input
+                        <input className="edit-input"
                             type="text"
                             name="firstName"
                             value={formData.firstName || ""}
                             onChange={handleInputChange}
                         />
                     </label>
-                    <label>
+                    <label className="edit-block">
                         Дата рождения:
-                        <input
+                        <input className="edit-input"
                             type="date"
                             name="birthDate"
                             value={formData.birthDate || ""}
                             onChange={handleInputChange}
                         />
                     </label>
-                    <p><b>Email:</b> {userData?.email || "Не указан"}</p>
-                    <button onClick={handleSave}>Сохранить</button>
-                    <button onClick={() => setIsEditing(false)}>Отмена</button>
+                    <p className="edit-text"><b className="email-block">Email:</b> {userData?.email || "Не указан"}</p>
+                    <button className="save-change-btn" onClick={handleSave}>Сохранить</button>
+                    <button className="cancel-button" onClick={() => setIsEditing(false)}>Отмена</button>
                 </div>
             ) : (
                 <div className="profile-view">

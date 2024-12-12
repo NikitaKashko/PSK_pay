@@ -83,3 +83,76 @@
 .edit-button:hover{
     background-color: #0056b3;
 }
+
+.edit-form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.edit-block{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #0f0f0f;
+    color: #fff;
+    width:500px;
+    height: 80px;
+    margin-bottom: 40px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+.edit-input{
+    border-radius: 10px;
+    width: 440px;
+    height: 25px;
+    font-size: 15px;
+    margin-top:5px;
+}
+.edit-text{
+    text-align: center;
+    border: 2px solid #0f0f0f;
+    border-radius: 10px;
+    height:70px;
+}
+.email-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f0f0f;
+    color: #fff;
+    width: 500px;
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+}
+.save-change-btn{
+    margin-top: 10px;
+    width: 300px;
+    height: 40px;
+    border-radius:20px;
+    border: 1px solid #ccc;
+    font-family: Gill Sans, sans-serif;
+    font-size: 16px;
+    font-weight: 550;
+    background-color: #2E8B57;
+    color: #fff;
+}
+.save-change-btn:hover{
+    background-color: #0056b3;
+}
+.cancel-button {
+    background-color: #0f0f0f;
+    margin-top: 10px;
+    width: 200px;
+    height: 34px;
+    border-radius:20px;
+    border: 1px solid #ccc;
+    font-family: Gill Sans, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color:#fff;
+}
+.cancel-button:hover{
+    background-color: #0056b3;
+}
