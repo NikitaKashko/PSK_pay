@@ -7,6 +7,7 @@ from .serializers import PasswordResetSerializer, UserProfileSerializer, BillsSe
 from .models import Bill, Profile, Meter
 from django.utils import timezone
 from datetime import datetime
+from rest_framework import status
 
 
 # Create your views here.
@@ -97,3 +98,22 @@ class MeterView(views.APIView):
         serializer = MeterSerializer(meters, many=True)
         return Response(serializer.data)
 
+    def post(self, request):
+        user = request.user
+        account_number = Profile.objects.get(user=user).account_number
+        
+        # Получаем данные из запроса и добавляем необходимые поля
+        data = {
+            'date': request.data.get('date'),
+            'dayMeter': request.data.get('dayMeter'),
+            'nightMeter': request.data.get('nightMeter'),
+            'accountNumber': account_number
+        }
+
+        serializer = MeterSerializer(data=data)
+        
+        if serializer.is_valid():
+            serializer.save()  # Сохраняем новую запись в базе данных
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
