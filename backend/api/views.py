@@ -42,22 +42,22 @@ class UserProfileView(views.APIView):
         return Response({"post": serializer.data})
 
 
-class BillsListView(views.APIView):
+class BillListView(views.APIView):
 
     def get(self, request):
-        user = request.user  # Получаем текущего пользователя
+        user = request.user
         month = request.query_params.get('month')
         account_number = request.query_params.get('accountNumber')
 
         if month:
-            year, month = map(int, month.split('-'))
-            start_date = datetime(year, month, 1)  # Начало месяца
-            end_date = start_date.replace(day=28) + timezone.timedelta(days=4)  # Переход к следующему месяцу
-            end_date = end_date - timezone.timedelta(days=end_date.day)  # Конец месяца
+            year, month = map(int, month.split('-')) 
+            start_date = datetime(year, month, 1) 
+            end_date = start_date.replace(day=28) + timezone.timedelta(days=4) 
+            end_date = end_date - timezone.timedelta(days=end_date.day) 
 
-            bills = Bill.objects.filter(user=user, date__range=[start_date, end_date])
+            bills = Bill.objects.filter(userId=user, date__range=[start_date, end_date])
         else:
-            bills = Bill.objects.filter(user=user)
+            bills = Bill.objects.filter(userId=user)
 
         if account_number:
             bills = bills.filter(accountNumber=account_number)
