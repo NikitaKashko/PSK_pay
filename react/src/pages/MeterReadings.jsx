@@ -2,13 +2,11 @@ import "../styles/MeterReadings.css";
 import { useState, useEffect } from "react";
 import api from "../api.js";
 import {useNavigate} from "react-router-dom";
-import Meter from "../components/Meter.jsx";
 
 function MeterReadings() {
     const [dayMeter, setDayMeter] = useState("");
     const [nightMeter, setNightMeter] = useState("");
     const [previousMeters, setPreviousMeters] = useState({ day: "", night: "" });
-    const [accountNumber, setAccountNumber] = useState("");
     const [date] = useState(new Date().toISOString().slice(0, 10));
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -18,11 +16,7 @@ function MeterReadings() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const accountRes = await api.get("/api/profile/"); // подгружаем привязанный к профилю лицевой счет?
-                setAccountNumber(accountRes.data.accountNumber);
-
-                const meterRes = await api.get("/api/meters/previous-meters/",
-                    { params : { accountNumber: accountRes.data.accountNumber }}); // подгружаем предыдущие показания по номеру лицевого счета
+                const meterRes = await api.get("/api/meters/previous-meters/");
                 setPreviousMeters({
                     day: meterRes.data.dayMeter || "",
                     night: meterRes.data.nightMeter || "",
@@ -44,7 +38,6 @@ function MeterReadings() {
                 date,
                 dayMeter,
                 nightMeter,
-                accountNumber,
             });
             setSuccess(true);
             setError(false);
@@ -87,10 +80,6 @@ function MeterReadings() {
                     <div className="field">
                         <label>Дата:</label>
                         <input type="text" value={date} readOnly />
-                    </div>
-                    <div className="field">
-                        <label>Лицевой счёт:</label>
-                        <input type="text" value={accountNumber} readOnly />
                     </div>
                     <div className="field">
                         <label>Дневные показания:</label>

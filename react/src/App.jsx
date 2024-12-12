@@ -11,6 +11,7 @@ import UnpaidBills from "./pages/UnpaidBills.jsx";
 import BillsHistory from "./pages/BillsHistory.jsx";
 import MeterReadings from "./pages/MeterReadings.jsx";
 import MeterHistory from "./pages/MeterHistory.jsx";
+import PaymentPage from "./pages/PaymentPage.jsx";
 
 function Logout(){
     localStorage.clear();
@@ -65,6 +66,14 @@ function App() {
                 />
                 <Route path="/meter-readings" element={<MeterReadings />} />
                 <Route path="/meter-history" element={<MeterHistory />} />
+                <Route
+                    path="/payment-page"
+                    element={
+                        <ProtectedRoute>
+                            <PaymentPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/help" element={<Help />} />
                 <Route path="*" element={<NotFound />}></Route>
             </Routes>

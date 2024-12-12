@@ -26,13 +26,8 @@ function UnpaidBills() {
         fetchUnpaidBills();
     }, []);
 
-    const handlePayment = async (billId) => {
-        try {
-            await api.post(`/api/bills/${billId}/pay`); // мб поменяется ?
-            setUnpaidBills((prevBills) => prevBills.filter((bill) => bill.id !== billId));
-        } catch (err) {
-            console.error("Ошибка при оплате счета:", err);
-        }
+    const handleNavigateToPayment = (bill) => {
+        navigate("/payment-page", {state: {bill}});
     };
 
     const handleLogoutBtnClick = () => {
@@ -67,7 +62,7 @@ function UnpaidBills() {
                                 amount={bill.amount}
                                 pdfUrl={bill.pdfUrl}
                                 isPaid={bill.isPaid}
-                                onPay={handlePayment}
+                                onPay={() => handleNavigateToPayment(bill)}
                             />
                         ))
                     ) : (
