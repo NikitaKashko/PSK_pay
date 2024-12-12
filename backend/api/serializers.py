@@ -120,4 +120,4 @@ class MeterSerializer(serializers.ModelSerializer):
 class CardsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreditCard
-        fields = ['id', 'card_number', 'user_id']
+        fields = ['id', 'card_number', 'balance', 'user_id']
