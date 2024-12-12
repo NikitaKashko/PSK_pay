@@ -19,7 +19,7 @@ function PaymentPage() {
         const fetchBillDetails = async () => {
             const { billId } = location.state || {};
             try {
-                const billRes = await api.get(`/api/bills/${billId}`);
+                const billRes = await api.get(`/api/bills/${billId}/`);
                 setBillDetails(billRes.data);
             } catch (err) {
                 console.error("Ошибка при загрузке деталей счёта", err);
@@ -28,7 +28,7 @@ function PaymentPage() {
 
         const fetchPaymentMethods = async () => {
             try {
-                const res = await api.get("/api/payment-methods");
+                const res = await api.get("/api/payment-methods/");
                 setPaymentMethods([...res.data]);
             } catch (err) {
                 console.error("Ошибка при загрузке методов оплаты", err);
@@ -47,7 +47,7 @@ function PaymentPage() {
         }
         setLoading(true);
         try {
-            const res = await api.post("/api/payment-methods", { method: newCard });
+            const res = await api.post("/api/payment-methods/", { method: newCard });
             setPaymentMethods((prev) => [...prev, res.data]);
             setNewCard("");
             setError("");
@@ -62,7 +62,7 @@ function PaymentPage() {
     const handleDeleteMethod = async (methodId) => {
         setLoading(true);
         try {
-            await api.delete(`/api/payment-methods/${methodId}`);
+            await api.delete(`/api/payment-methods/${methodId}/`);
             setPaymentMethods((prev) => prev.filter((method) => method.id !== methodId));
         } catch (err) {
             console.error("Ошибка при удалении метода оплаты", err);
@@ -81,7 +81,7 @@ function PaymentPage() {
             if (selectedMethod === "QR-код") {
                 setShowQrCode(true);
             } else {
-                await api.post("/api/bills/pay", { billId: billDetails.id, method: selectedMethod });
+                await api.post("/api/bills/pay/", { billId: billDetails.id, method: selectedMethod });
                 setSuccess(true);
                 setError("");
                 setTimeout(() => {
