@@ -84,16 +84,15 @@ class MeterView(views.APIView):
         month = request.query_params.get('month')
         account_number = Profile.objects.get(user=user).account_number
 
+        meters = Meter.objects.filter(accountNumber=account_number)
+
         if month:
             year, month = map(int, month.split('-')) 
             start_date = datetime(year, month, 1) 
             end_date = start_date.replace(day=28) + timezone.timedelta(days=4) 
             end_date = end_date - timezone.timedelta(days=end_date.day) 
 
-            meters = Meter.objects.filter(userId=user, date__range=[start_date, end_date])
-
-        if account_number:
-            meters = meters.filter(accountNumber=account_number)
+            meters = meters.filter(date__range=[start_date, end_date])
 
         serializer = MeterSerializer(meters, many=True)
         return Response(serializer.data)
