@@ -26,10 +26,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     birth_date = serializers.DateField(source='profile.birth_date')
+    account_number = serializers.IntegerField(source='profile.account_number')
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'birth_date']
+        fields = ['first_name', 'last_name', 'email', 'birth_date', ]
 
     def update(self, instance, validated_data):
         print("Validated data:", validated_data)
@@ -41,6 +42,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         profile_instance = instance.profile
         profile_instance.birth_date = validated_data['profile'].get('birth_date', profile_instance.birth_date)
+        profile_instance.account_number = validated_data['profile'].get('account_number', profile_instance.account_number)
         
         profile_instance.save()
 
@@ -94,3 +96,9 @@ class BillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
         fields = ['id', 'accountNumber', 'amount', 'pdUrl', 'isPaid', 'onPay']
+
+
+class MeterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bill
+        fields = ['date', 'dayMeter', 'nightMeter', 'accountNumber']

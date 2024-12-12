@@ -3,8 +3,8 @@ from rest_framework import generics, views
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from .serializers import PasswordResetSerializer, UserProfileSerializer, BillsSerializer
-from .models import Bill
+from .serializers import PasswordResetSerializer, UserProfileSerializer, BillsSerializer, MeterSerializer
+from .models import Bill, Profile, Meter
 from django.utils import timezone
 from datetime import datetime
 
@@ -74,3 +74,26 @@ class BillsUnpaidListView(views.APIView):
 
         serializer = BillsSerializer(bills, many=True)
         return Response(serializer.data)
+
+
+class MeterView(views.APIView):
+
+    def get(self, request):
+        user = request.user
+        month = request.query_params.get('month')
+        account_number = Profile.objects.get(user=user).account_number
+
+        if month:
+            year, month = map(int, month.split('-')) 
+            start_date = datetime(year, month, 1) 
+            end_date = start_date.replace(day=28) + timezone.timedelta(days=4) 
+            end_date = end_date - timezone.timedelta(days=end_date.day) 
+
+            meters = Meter.objects.filter(userId=user, date__range=[start_date, end_date])
+
+        if account_number:
+            meters = meters.filter(accountNumber=account_number)
+
+        serializer = MeterSerializer(meters, many=True)
+        return Response(serializer.data)
+

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, PasswordResetView, UserProfileView, BillsListView, BillsUnpaidListView
+from api.views import CreateUserView, PasswordResetView, UserProfileView, BillsListView, BillsUnpaidListView, MeterView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
@@ -13,5 +13,6 @@ urlpatterns = [
     path('api/password_reset/', PasswordResetView.as_view(), name='password_reset'),
     path('api/profile/', UserProfileView.as_view(), name='profile'),
     path('api/bills/history/', BillsListView.as_view(), name='bills_history'),
-    path('/api/bills/unpaid/', BillsUnpaidListView.as_view(), name='bills_unpaid')
+    path('api/bills/unpaid/', BillsUnpaidListView.as_view(), name='bills_unpaid'),
+    path('api/meters/history/', MeterView.as_view(), name='meter_history')
 ]

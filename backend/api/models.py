@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(null=True, blank=True)
+    account_number = models.PositiveIntegerField(default=228)
 
     def __str__(self):
         return self.user.username
@@ -18,3 +19,10 @@ class Bill(models.Model):
     pdUrl = models.URLField(default='https://vk.com/pechebka')
     isPaid = models.BooleanField(default=False)
     onPay = models.BooleanField(default=False)
+
+
+class Meter(models.Model):
+    date = models.DateField()
+    dayMeter = models.IntegerField()
+    nightMeter = models.IntegerField()
+    accountNumber = models.PositiveIntegerField()
