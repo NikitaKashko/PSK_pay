@@ -55,7 +55,7 @@ function MeterHistory(){
                 <h1 className="metershistory-title">История показаний</h1>
                 <div className="filters">
                     <label htmlFor="month">Выберите месяц:</label>
-                    <input
+                    <input className="date-input"
                         type="month"
                         id="month"
                         name="month"

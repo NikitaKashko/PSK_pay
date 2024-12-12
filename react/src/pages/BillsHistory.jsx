@@ -56,7 +56,7 @@ function BillsHistory(){
                 <h1 className="billshistory-title">История</h1>
                 <div className="filters">
                     <label htmlFor="month">Выберите месяц:</label>
-                    <input
+                    <input className="filter-input"
                         type="month"
                         id="month"
                         name="month"
@@ -64,7 +64,7 @@ function BillsHistory(){
                         onChange={handleFilterChange}
                     />
                     <label htmlFor="accountNumber">Введите номер лицевого счёта:</label>
-                    <input
+                    <input className="filter-input"
                         type="text"
                         id="accountNumber"
                         name="accountNumber"
