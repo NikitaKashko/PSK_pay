@@ -67,8 +67,6 @@ function MeterHistory(){
                     {meters.length > 0 ? (
                         meters.map((meter) => (
                             <Meter
-                                key={meter.id}
-                                id={meter.id}
                                 date={meter.date}
                                 accountNumber={meter.accountNumber}
                                 dayMeter={meter.dayMeter}
