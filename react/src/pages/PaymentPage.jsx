@@ -18,18 +18,23 @@ function PaymentPage() {
     useEffect(() => {
         const fetchBillDetails = async () => {
             const { billId } = location.state || {};
+            if (!billId) {
+                setError("ID счета не найден");
+                return;
+            }
             try {
                 const billRes = await api.get(`/api/bills/${billId}/`);
                 setBillDetails(billRes.data);
             } catch (err) {
                 console.error("Ошибка при загрузке деталей счёта", err);
+                setError("Ошибка при загрузке данных счёта");
             }
         };
 
         const fetchPaymentMethods = async () => {
             try {
                 const res = await api.get("/api/payment-methods/");
-                setPaymentMethods([...res.data]);
+                setPaymentMethods(res.data);
             } catch (err) {
                 console.error("Ошибка при загрузке методов оплаты", err);
             }
@@ -48,7 +53,7 @@ function PaymentPage() {
         setLoading(true);
         try {
             const res = await api.post("/api/payment-methods/", { method: newCard });
-            setPaymentMethods((prev) => [...prev, res.data]);
+            setPaymentMethods((prevMethods) => [...prevMethods, res.data]);
             setNewCard("");
             setError("");
         } catch (err) {
@@ -63,7 +68,7 @@ function PaymentPage() {
         setLoading(true);
         try {
             await api.delete(`/api/payment-methods/${methodId}/`);
-            setPaymentMethods((prev) => prev.filter((method) => method.id !== methodId));
+            setPaymentMethods((prevMethods) => prevMethods.filter((method) => method.id !== methodId));
         } catch (err) {
             console.error("Ошибка при удалении метода оплаты", err);
         } finally {
@@ -111,7 +116,7 @@ function PaymentPage() {
                 <ul>
                     {paymentMethods.map((method) => (
                         <li key={method.id}>
-                            <span>{method.method}</span>
+                            <span>{method.card_number}</span>
                             {method.id !== "qr" && (
                                 <button onClick={() => handleDeleteMethod(method.id)}>
                                     Удалить
@@ -120,7 +125,8 @@ function PaymentPage() {
                         </li>
                     ))}
                 </ul>
-                <input className="card-input"
+                <input
+                    className="card-input"
                     type="text"
                     value={newCard}
                     placeholder="Добавить карту (16 цифр)"
@@ -133,17 +139,18 @@ function PaymentPage() {
             <div className="payment-actions">
                 <label className="method-choice">
                     Выберите метод оплаты:
-                    <select className="choice-form"
+                    <select
+                        className="choice-form"
                         value={selectedMethod}
                         onChange={(e) => setSelectedMethod(e.target.value)}
                     >
                         <option value="">Выберите</option>
                         {paymentMethods.map((method) => (
-                            <option key={method.id} value={method.method}>
-                                {method.method}
+                            <option key={method.id} value={method.card_number}>
+                                {method.card_number}
                             </option>
                         ))}
-                        <option value={"QR-код"}>QR-код</option>
+                        <option value="QR-код">QR-код</option>
                     </select>
                 </label>
                 <button className="pay-btn" onClick={handlePay} disabled={loading}>
@@ -154,7 +161,7 @@ function PaymentPage() {
                 {showQrCode && (
                     <div>
                         <h3>Оплатите через QR-код:</h3>
-                        <img src="../assets/qr-code.png" alt="QR-код" width="250"/>
+                        <img src="../assets/qr-code.png" alt="QR-код" width="635" />
                     </div>
                 )}
             </div>

@@ -19,15 +19,15 @@ function UnpaidBills() {
                 console.error("Ошибка при подгрузке неполаченных счетов с базы ", error);
                 setError(true);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
         };
 
         fetchUnpaidBills();
     }, []);
 
-    const handleNavigateToPayment = (bill) => {
-        navigate("/payment-page", {state: {bill}});
+    const handleNavigateToPayment = (billId) => {
+        navigate("/payment-page/", { state: { billId: billId } });
     };
 
     const handleLogoutBtnClick = () => {
@@ -53,7 +53,7 @@ function UnpaidBills() {
                 <div className="unpaid-bills-container">
                     {unpaidBills.length > 0 ? (
                         unpaidBills.map((bill) => (
-
+                            <div className="bill-info">
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
@@ -64,7 +64,7 @@ function UnpaidBills() {
                                 isPaid={bill.isPaid}
                                 onPay={() => handleNavigateToPayment(bill)}
                             />
-
+                            </div>
                         ))
                     ) : (
                         <p>Нет неоплаченных счетов</p>
