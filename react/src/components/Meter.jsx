@@ -1,9 +1,8 @@
 import * as PropTypes from "prop-types";
 
-const Meter = ({ id, date, dayMeter, nightMeter, accountNumber }) => {
+const Meter = ({ date, dayMeter, nightMeter, accountNumber }) => {
     return (
         <div className="meter">
-            <p><b>ID:</b> {id}</p>
             <p><b>Дата:</b> {date}</p>
             <p><b>День:</b> {dayMeter}</p>
             <p><b>Ночь:</b> {nightMeter}</p>
@@ -13,7 +12,6 @@ const Meter = ({ id, date, dayMeter, nightMeter, accountNumber }) => {
 };
 
 Meter.propTypes = {
-    id: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired,
     accountNumber: PropTypes.string.isRequired,
     dayMeter: PropTypes.string.isRequired,

@@ -16,11 +16,14 @@ function MeterReadings() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const meterRes = await api.get("/api/meters/previous-meters/");
-                setPreviousMeters({
-                    day: meterRes.data.dayMeter || "",
-                    night: meterRes.data.nightMeter || "",
-                })
+                const meterRes = await api.get("/api/meters/history/");
+                const latestMeter = meterRes.data[meterRes.data.length - 1];
+                if (latestMeter) {
+                    setPreviousMeters({
+                        day: latestMeter.dayMeter || "",
+                        night: latestMeter.nightMeter || "",
+                    });
+                }
             } catch (error) {
                 console.error("Ошибка при подгрузке показаний с базы ", error);
                 setError(true);
@@ -34,7 +37,7 @@ function MeterReadings() {
         e.preventDefault();
         setLoading(true);
         try {
-            await api.post("/api/meters/submit-meters", {
+            await api.post("/api/meters/history/", {
                 date,
                 dayMeter,
                 nightMeter,
