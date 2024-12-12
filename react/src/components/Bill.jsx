@@ -5,7 +5,7 @@ const Bill = ({
                   date,
                   accountNumber,
                   amount,
-                  pdfUrl,
+                  pdUrl,
                   isPaid,
                   onPay
               }) => {
@@ -27,8 +27,8 @@ const Bill = ({
                 <p className="paid-status">Счёт оплачен</p>
             )}
 
-            {pdfUrl ? (
-                <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+            {pdUrl ? (
+                <a href={pdUrl} target="_blank" rel="noopener noreferrer">
                     <button className="pdf-button">Скачать PDF</button>
                 </a>
             ) : (
@@ -43,7 +43,7 @@ Bill.propTypes = {
     date: PropTypes.string.isRequired,
     accountNumber: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
-    pdfUrl: PropTypes.string,
+    pdUrl: PropTypes.string,
     isPaid: PropTypes.bool.isRequired,
     onPay: PropTypes.func,
 };

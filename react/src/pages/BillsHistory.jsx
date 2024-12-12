@@ -69,10 +69,10 @@ function BillsHistory(){
                     />
                     <label htmlFor="accountNumber">Введите номер лицевого счёта:</label>
                     <input className="filter-input"
-                        type="text"
+                        type="number"
                         id="accountNumber"
                         name="accountNumber"
-                        value={filters.accountNumber}
+                        value={filters.account_number}
                         placeholder="Лицевой счёт"
                         onChange={handleFilterChange}
                     />
@@ -87,7 +87,7 @@ function BillsHistory(){
                                 date={bill.date}
                                 accountNumber={bill.accountNumber}
                                 amount={bill.amount}
-                                pdfUrl={bill.pdfUrl}
+                                pdUrl={bill.pdUrl}
                                 isPaid={bill.isPaid}
                                 onPay={() => handleNavigateToPayment(bill)}
                             />
