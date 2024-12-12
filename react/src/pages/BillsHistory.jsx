@@ -7,8 +7,7 @@ import Bill from "../components/Bill.jsx";
 function BillsHistory(){
     const [bills, setBills] = useState([]);
     const [filters, setFilters] = useState({
-        month: new Date().toISOString().slice(0, 7),
-        accountNumber: "",
+        month: new Date().toISOString().slice(0, 7)
     });
     const [setLoading] = useState(false);
     const [setError] = useState(false);
@@ -42,8 +41,8 @@ function BillsHistory(){
         navigate("/")
     }
 
-    const handleNavigateToPayment = (bill) => {
-        navigate("/payment-page", {state: {bill}});
+    const handleNavigateToPayment = (billId) => {
+        navigate("/payment-page/", {state: {billId}});
     };
 
     return (
@@ -67,15 +66,6 @@ function BillsHistory(){
                         value={filters.month}
                         onChange={handleFilterChange}
                     />
-                    <label htmlFor="accountNumber">Введите номер лицевого счёта:</label>
-                    <input className="filter-input"
-                        type="number"
-                        id="accountNumber"
-                        name="accountNumber"
-                        value={filters.account_number}
-                        placeholder="Лицевой счёт"
-                        onChange={handleFilterChange}
-                    />
                 </div>
                 <div className="bills-history-container">
                     {bills.length > 0 ? (
@@ -89,7 +79,7 @@ function BillsHistory(){
                                 amount={bill.amount}
                                 pdUrl={bill.pdUrl}
                                 isPaid={bill.isPaid}
-                                onPay={() => handleNavigateToPayment(bill)}
+                                onPay={() => handleNavigateToPayment(bill.id)}
                             />
                         ))
                     ) : (
