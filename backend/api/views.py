@@ -64,3 +64,13 @@ class BillsListView(views.APIView):
 
         serializer = BillsSerializer(bills, many=True)
         return Response(serializer.data)
+
+
+class BillsUnpaidListView(views.APIView):
+
+    def get(self, request):
+        user = request.user
+        bills = Bill.objects.filter(userId=user, isPaid=False)
+
+        serializer = BillsSerializer(bills, many=True)
+        return Response(serializer.data)
