@@ -21,14 +21,14 @@ function Profile() {
                         secondName: res.data.last_name || "",
                         email: res.data.email || "",
                         birthDate: res.data.birth_date || "",
-                        accountNumber: res.data.accountNumber || "",
+                        accountNumber: res.data.account_number || "",
                     });
                     setFormData({
                         firstName: res.data.first_name || "",
                         secondName: res.data.last_name || "",
                         email: res.data.email || "",
                         birthDate: res.data.birth_date || "",
-                        accountNumber: res.data.accountNumber || "",
+                        accountNumber: res.data.account_number || "",
                     });
                 } else {
                     setUserData({email: ""});
@@ -55,7 +55,7 @@ function Profile() {
                 first_name: formData.firstName,
                 last_name: formData.secondName,
                 birth_date: formData.birthDate,
-                accountNumber: formData.accountNumber,
+                account_number: formData.accountNumber,
             });
             if (res.status === 200) {
                 setUserData({
