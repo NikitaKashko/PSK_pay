@@ -118,7 +118,7 @@ function PaymentPage() {
                         <li key={method.id}>
                             <span>{method.card_number}</span>
                             {method.id !== "qr" && (
-                                <button onClick={() => handleDeleteMethod(method.id)}>
+                                <button className="delete-btn" onClick={() => handleDeleteMethod(method.id)}>
                                     Удалить
                                 </button>
                             )}
