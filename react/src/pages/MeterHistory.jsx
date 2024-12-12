@@ -67,14 +67,12 @@ function MeterHistory(){
 
                     {meters.length > 0 ? (
                         meters.map((meter) => (
-                            <div className="meter-info">
                                 <Meter
                                     date={meter.date}
                                     accountNumber={meter.accountNumber}
                                     dayMeter={meter.dayMeter}
                                     nightMeter={meter.nightMeter}
                                 />
-                            </div>
                         ))
                     ) : (
                         <p>Показания за выбранный период отсутствуют</p>

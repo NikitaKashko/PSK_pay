@@ -1,4 +1,5 @@
 import * as PropTypes from "prop-types";
+import "../styles/Meter.css"
 
 const Meter = ({ date, dayMeter, nightMeter, accountNumber }) => {
     return (

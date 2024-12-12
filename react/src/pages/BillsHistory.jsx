@@ -80,7 +80,7 @@ function BillsHistory(){
                 <div className="bills-history-container">
                     {bills.length > 0 ? (
                         bills.map((bill) => (
-                            <div className="bill-info">
+
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
@@ -91,7 +91,6 @@ function BillsHistory(){
                                 isPaid={bill.isPaid}
                                 onPay={() => handleNavigateToPayment(bill)}
                             />
-                            </div>
                         ))
                     ) : (
                         <p>Счета за выбранный период и/или по введенному лицевому счету отсутствуют</p>

@@ -1,4 +1,5 @@
 import * as PropTypes from "prop-types";
+import "../styles/Bill.css"
 
 const Bill = ({
                   id,
@@ -20,7 +21,7 @@ const Bill = ({
             <p><b>Сумма:</b> {amount} ₽</p>
 
             {!isPaid ? (
-                <button onClick={handlePayClick} className="pay-button">
+                <button className="pay-button" onClick={handlePayClick}>
                     Оплатить
                 </button>
             ) : (
