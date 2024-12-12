@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Profile, Bill
+from .models import Profile, Bill, Meter
 import random
 import string
 
@@ -100,5 +100,5 @@ class BillsSerializer(serializers.ModelSerializer):
 
 class MeterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Bill
+        model = Meter
         fields = ['date', 'dayMeter', 'nightMeter', 'accountNumber']
