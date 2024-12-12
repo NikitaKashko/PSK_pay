@@ -111,7 +111,6 @@ class MeterView(views.APIView):
 
         serializer_meter = MeterSerializer(data=data)
         if serializer_meter.is_valid():
-            serializer_meter.save()  # Сохраняем новую запись в базе данных
             data_bill = {
                 'date': data['date'],
                 'accountNumber': account_number,
@@ -124,11 +123,13 @@ class MeterView(views.APIView):
                 last_meter = Meter.objects.get(accountNumber=account_number)
 
             except Meter.DoesNotExist:
+                print('kakashki')
                 data_bill['amount'] = data_day * 10.5 + data_night * 15.5
                 serializer_bill = BillsSerializer(data=data_bill)
                 serializer_bill.is_valid(raise_exception=True)
                 serializer_bill.save()
             except Meter.MultipleObjectsReturned:
+                print('govnyashki')
                 latest_meter = Meter.objects.filter(accountNumber=account_number).latest('date')
                 day = latest_meter.dayMeter
                 night = latest_meter.nightMeter
@@ -140,6 +141,7 @@ class MeterView(views.APIView):
                 else:
                     return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
             else:
+                print('pisi i popy')
                 day = last_meter.dayMeter
                 night = last_meter.nightMeter
                 if not (data_day < day or data_night < night):
@@ -150,6 +152,8 @@ class MeterView(views.APIView):
                 else:
                     return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
 
+            serializer_meter.save()
+            
             return Response(serializer_meter.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer_meter.errors, status=status.HTTP_400_BAD_REQUEST)
