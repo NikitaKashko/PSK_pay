@@ -56,9 +56,7 @@ class BillsListView(views.APIView):
             end_date = start_date.replace(day=28) + timezone.timedelta(days=4) 
             end_date = end_date - timezone.timedelta(days=end_date.day) 
 
-            bills = Bill.objects.filter(userId=user, date__range=[start_date, end_date])
-        else:
-            bills = Bill.objects.filter(userId=user)
+            bills = Bill.objects.filter(date__range=[start_date, end_date])
 
         if account_number:
             bills = bills.filter(accountNumber=account_number)
