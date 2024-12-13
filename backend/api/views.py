@@ -48,7 +48,7 @@ class BillsListView(views.APIView):
     def get(self, request):
         user = request.user
         month = request.query_params.get('month')
-        account_number = request.query_params.get('accountNumber')
+        account_number = Profile.objects.get(pk=user.id).account_number
 
         if month:
             year, month = map(int, month.split('-')) 
