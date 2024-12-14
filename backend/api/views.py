@@ -44,6 +44,7 @@ class UserProfileView(views.APIView):
 
 
 class BillsListView(views.APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
@@ -67,6 +68,7 @@ class BillsListView(views.APIView):
 
 
 class BillsUnpaidListView(views.APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
@@ -77,6 +79,7 @@ class BillsUnpaidListView(views.APIView):
 
 
 class BillsUnpaidView(views.APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         bill = Bill.objects.get(pk=pk)
@@ -86,6 +89,7 @@ class BillsUnpaidView(views.APIView):
 
 
 class MeterView(views.APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
@@ -165,6 +169,7 @@ class MeterView(views.APIView):
 
 
 class CreditsView(views.APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
         cards = CreditCard.objects.filter(user_id=user)
@@ -190,6 +195,7 @@ class CreditsView(views.APIView):
 
 
 class PaymentView(views.APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         data = request.data
         print(data)
