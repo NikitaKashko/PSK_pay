@@ -59,7 +59,7 @@ function UnpaidBills() {
                                 date={bill.date}
                                 accountNumber={bill.accountNumber}
                                 amount={bill.amount}
-                                pdfUrl={bill.pdUrl}
+                                pdUrl={bill.pdUrl}
                                 isPaid={bill.isPaid}
                                 onPay={() => handleNavigateToPayment(bill.id)}
                             />
