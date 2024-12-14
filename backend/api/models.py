@@ -37,3 +37,8 @@ class CreditCard(models.Model):
     card_number = models.CharField(max_length=16, validators=[validate_fixed_length])
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=100000.00)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Tarif(models.Model):
+    day_tarif = models.IntegerField(default=10)
+    night_tarif = models.IntegerField(default=15)

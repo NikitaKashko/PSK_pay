@@ -4,7 +4,7 @@ from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .serializers import PasswordResetSerializer, UserProfileSerializer, BillsSerializer, MeterSerializer, CardsSerializer
-from .models import Bill, Profile, Meter, CreditCard
+from .models import Bill, Profile, Meter, CreditCard, Tarif
 from django.utils import timezone
 from datetime import datetime
 from rest_framework import status
@@ -147,6 +147,9 @@ class MeterView(views.APIView):
     def post(self, request):
         user = request.user
         account_number = Profile.objects.get(user=user).account_number
+        tarif = Tarif.objects.get(pk=1)
+        day_tarif = tarif.day_tarif
+        day_night = tarif.night_tarif
         
         # Получаем данные из запроса и добавляем необходимые поля
         data = {
@@ -170,7 +173,7 @@ class MeterView(views.APIView):
                 last_meter = Meter.objects.get(accountNumber=account_number)
 
             except Meter.DoesNotExist:
-                data_bill['amount'] = data_day * 10.5 + data_night * 15.5
+                data_bill['amount'] = data_day * day_tarif + data_night * day_night
                 serializer_bill = BillsSerializer(data=data_bill)
                 serializer_bill.is_valid(raise_exception=True)
                 bill_instance = serializer_bill.save()
@@ -182,7 +185,7 @@ class MeterView(views.APIView):
                 day = latest_meter.dayMeter
                 night = latest_meter.nightMeter
                 if not (data_day < day or data_night < night):
-                    data_bill['amount'] = (data_day - day) * 10.5 + (data_night - night) * 15.5
+                    data_bill['amount'] = (data_day - day) * day_tarif + (data_night - night) * day_night
                     serializer_bill = BillsSerializer(data=data_bill)
                     serializer_bill.is_valid(raise_exception=True)
                     bill_instance = serializer_bill.save()
@@ -195,7 +198,7 @@ class MeterView(views.APIView):
                 day = last_meter.dayMeter
                 night = last_meter.nightMeter
                 if not (data_day < day or data_night < night):
-                    data_bill['amount'] = (data_day - day) * 10.5 + (data_night - night) * 15.5
+                    data_bill['amount'] = (data_day - day) * day_tarif + (data_night - night) * day_night
                     serializer_bill = BillsSerializer(data=data_bill)
                     serializer_bill.is_valid(raise_exception=True)
                     bill_instance = serializer_bill.save()
