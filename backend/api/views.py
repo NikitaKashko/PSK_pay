@@ -8,9 +8,23 @@ from .models import Bill, Profile, Meter, CreditCard
 from django.utils import timezone
 from datetime import datetime
 from rest_framework import status
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen import canvas
+import os
 
 
-# Create your views here.
+def generate_pdf(bill):
+    # Здесь создайте HTML-контент для вашего PDF
+    html_content = f"<h1>Счет #{bill.id}</h1><p>Сумма: {bill.amount}</p>"
+    
+    pdf_file_path = f"media/bills/bill_{bill.id}.pdf"  # Путь к файлу PDF
+    HTML(string=html_content).write_pdf(pdf_file_path)
+    
+    return pdf_file_path
+
+
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -91,6 +105,27 @@ class BillsUnpaidView(views.APIView):
 class MeterView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    def generate_pdf(self, bill):
+        pdf_directory = "media/bills/"
+        if not os.path.exists(pdf_directory):
+            os.makedirs(pdf_directory)
+        # Создание PDF-файла в указанной директории
+        pdf_file_path = f"media/bills/bill_{bill.id}.pdf"  # Укажите путь к файлу
+        font_path = 'fonts/LG_Display.ttf'
+
+        pdfmetrics.registerFont(TTFont('LG_Display', font_path))
+
+        p = canvas.Canvas(pdf_file_path, pagesize=letter)
+        p.setFont("LG_Display", 12)
+        p.drawString(100, 750, f"Счет ID: {bill.id}")
+        p.drawString(100, 730, f"Дата: {bill.date.strftime('%Y-%m-%d')}")
+        p.drawString(100, 710, f"Сумма: {bill.amount}")
+        p.drawString(100, 690, f"Оплачено: {'Да' if bill.isPaid else 'Нет'}")
+        p.showPage()
+        p.save()
+
+        return 'http://127.0.0.1:8000/' + pdf_file_path
+
     def get(self, request):
         user = request.user
         month = request.query_params.get('month')
@@ -138,7 +173,10 @@ class MeterView(views.APIView):
                 data_bill['amount'] = data_day * 10.5 + data_night * 15.5
                 serializer_bill = BillsSerializer(data=data_bill)
                 serializer_bill.is_valid(raise_exception=True)
-                serializer_bill.save()
+                bill_instance = serializer_bill.save()
+                pdf_url = self.generate_pdf(bill_instance)
+                bill_instance.pdUrl = pdf_url
+                bill_instance.save()
             except Meter.MultipleObjectsReturned:
                 latest_meter = Meter.objects.filter(accountNumber=account_number).latest('date')
                 day = latest_meter.dayMeter
@@ -147,7 +185,10 @@ class MeterView(views.APIView):
                     data_bill['amount'] = (data_day - day) * 10.5 + (data_night - night) * 15.5
                     serializer_bill = BillsSerializer(data=data_bill)
                     serializer_bill.is_valid(raise_exception=True)
-                    serializer_bill.save()
+                    bill_instance = serializer_bill.save()
+                    pdf_url = self.generate_pdf(bill_instance)
+                    bill_instance.pdUrl = pdf_url
+                    bill_instance.save()
                 else:
                     return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
             else:
@@ -157,7 +198,10 @@ class MeterView(views.APIView):
                     data_bill['amount'] = (data_day - day) * 10.5 + (data_night - night) * 15.5
                     serializer_bill = BillsSerializer(data=data_bill)
                     serializer_bill.is_valid(raise_exception=True)
-                    serializer_bill.save()
+                    bill_instance = serializer_bill.save()
+                    pdf_url = self.generate_pdf(bill_instance)
+                    bill_instance.pdUrl = pdf_url
+                    bill_instance.save()
                 else:
                     return Response(serializer_meter.data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -170,6 +214,7 @@ class MeterView(views.APIView):
 
 class CreditsView(views.APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         user = request.user
         cards = CreditCard.objects.filter(user_id=user)
@@ -196,6 +241,7 @@ class CreditsView(views.APIView):
 
 class PaymentView(views.APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         data = request.data
         print(data)
