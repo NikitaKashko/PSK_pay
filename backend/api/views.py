@@ -258,3 +258,14 @@ class PaymentView(views.APIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class PaymentQRView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        data = request.data
+        bill = Bill.objects.get(pk=data['billId'])
+        bill.isPaid = True
+        bill.save()
+        return Response(status=status.HTTP_200_OK)

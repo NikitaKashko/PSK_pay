@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, PasswordResetView, UserProfileView, BillsListView, BillsUnpaidListView, MeterView, CreditsView, BillsUnpaidView, PaymentView
+from api.views import CreateUserView, PasswordResetView, UserProfileView, BillsListView, BillsUnpaidListView, MeterView, CreditsView, BillsUnpaidView, PaymentView, PaymentQRView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,6 +21,7 @@ urlpatterns = [
     path('api/meters/history/', MeterView.as_view(), name='meter_history'),
     path('api/payment-methods/', CreditsView.as_view(), name='payment_methods_list'),
     path('api/payment-methods/<int:pk>/', CreditsView.as_view(), name='delete_payment_method'),
+    path('api/payment-methods/qr/', PaymentQRView.as_view(), name='qr_payment'),
 ]
 
 if settings.DEBUG:
