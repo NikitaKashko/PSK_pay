@@ -85,14 +85,25 @@ function PaymentPage() {
         try {
             if (selectedMethod === "QR-код") {
                 setShowQrCode(true);
+                const res = await api.post("/api/payment-methods/qr", { billId: billDetails.id});
+                if (res.status === 200) {
+                    setSuccess(true);
+                    setError("");
+                } else {
+                    setError("ОШибка при оплате qr-кодом");
+                    setShowQrCode(false);
+                }
             } else {
-                await api.post("/api/bills/pay/", { billId: billDetails.id, method: selectedMethod });
-                setSuccess(true);
-                setError("");
-                setTimeout(() => {
-                    navigate("/");
-                }, 5000);
+                setShowQrCode(false);
+                const res = await api.post("/api/bills/pay/", { billId: billDetails.id, method: selectedMethod });
+                if (res.status === 200) {
+                    setSuccess(true);
+                    setError("");
+                }
             }
+            setTimeout(() => {
+                navigate("/");
+            }, 5000);
         } catch (err) {
             console.error("Ошибка при оплате счёта", err);
             setError("Ошибка при оплате. Попробуйте ещё раз.");
@@ -161,7 +172,7 @@ function PaymentPage() {
                 {showQrCode && (
                     <div>
                         <h3>Оплатите через QR-код:</h3>
-                        <img src="../assets/qr-code.png" alt="QR-код" width="635" />
+                        <img src="/qr-code.png" alt="QR-код" width="500" />
                     </div>
                 )}
             </div>
