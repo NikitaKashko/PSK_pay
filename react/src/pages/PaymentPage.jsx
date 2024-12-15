@@ -85,14 +85,9 @@ function PaymentPage() {
         try {
             if (selectedMethod === "QR-код") {
                 setShowQrCode(true);
-                const res = await api.post("/api/payment-methods/qr", { billId: billDetails.id});
-                if (res.status === 200) {
-                    setSuccess(true);
-                    setError("");
-                } else {
-                    setError("ОШибка при оплате qr-кодом");
-                    setShowQrCode(false);
-                }
+                await api.post("/api/payment-methods/qr", { billId: billDetails.id});
+                setSuccess(true);
+                setError("");
             } else {
                 setShowQrCode(false);
                 const res = await api.post("/api/bills/pay/", { billId: billDetails.id, method: selectedMethod });
