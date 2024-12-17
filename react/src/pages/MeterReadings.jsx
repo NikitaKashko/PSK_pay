@@ -42,6 +42,7 @@ function MeterReadings() {
                 dayMeter,
                 nightMeter,
             });
+            setPreviousMeters({ day: dayMeter, night: nightMeter });
             setSuccess(true);
             setError(false);
             setDayMeter("");
