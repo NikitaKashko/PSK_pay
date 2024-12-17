@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, PasswordResetView, UserProfileView, BillsListView, BillsUnpaidListView, MeterView, CreditsView, BillsUnpaidView, PaymentView, PaymentQRView
+from api.views import CreateUserView, PasswordResetView, UserProfileView, BillsListView, BillsUnpaidListView, MeterView, CreditsView, BillsUnpaidView, PaymentView, PaymentQRView, download_pdf
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,7 +22,8 @@ urlpatterns = [
     path('api/payment-methods/', CreditsView.as_view(), name='payment_methods_list'),
     path('api/payment-methods/<int:pk>/', CreditsView.as_view(), name='delete_payment_method'),
     path('api/payment-methods/qr/', PaymentQRView.as_view(), name='qr_payment'),
+    path('media/bills/<str:filename>/', download_pdf, name='download_pdf'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+ #   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

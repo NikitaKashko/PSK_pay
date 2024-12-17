@@ -12,6 +12,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+from django.http import FileResponse, HttpResponse
 import os
 
 
@@ -269,3 +270,14 @@ class PaymentQRView(views.APIView):
         bill.isPaid = True
         bill.save()
         return Response(status=status.HTTP_200_OK)
+
+
+def download_pdf(request, filename):
+    file_path = os.path.join('media/bills', filename)
+
+    if os.path.exists(file_path):
+        response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+    else:
+        return HttpResponse("Файл не найден", status=404)
