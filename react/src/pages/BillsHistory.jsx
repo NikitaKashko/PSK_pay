@@ -9,8 +9,8 @@ function BillsHistory(){
     const [filters, setFilters] = useState({
         month: new Date().toISOString().slice(0, 7)
     });
-    const [setLoading] = useState(false);
-    const [setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -70,7 +70,6 @@ function BillsHistory(){
                 <div className="bills-history-container">
                     {bills.length > 0 ? (
                         bills.map((bill) => (
-
                             <Bill
                                 key={bill.id}
                                 id={bill.id}
@@ -83,7 +82,7 @@ function BillsHistory(){
                             />
                         ))
                     ) : (
-                        <p>Счета за выбранный период и/или по введенному лицевому счету отсутствуют</p>
+                        <p>Счета за выбранный период отсутствуют</p>
                     )}
                 </div>
             </div>

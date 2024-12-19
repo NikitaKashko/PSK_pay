@@ -98,7 +98,7 @@ function PaymentPage() {
             }
             setTimeout(() => {
                 navigate("/");
-            }, 5000);
+            }, 8000);
         } catch (err) {
             console.error("Ошибка при оплате счёта", err);
             setError("Ошибка при оплате. Попробуйте ещё раз.");

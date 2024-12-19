@@ -64,7 +64,6 @@ function Form({route, method}) {
                 placeholder="Пароль"
             />
             {error && <p className="error-text">Логин или пароль неверный</p>}
-            {/*{loading && <LoadingIndicator />}*/}
             <button className="form-button" type="submit">
                 {buttonName}
             </button>

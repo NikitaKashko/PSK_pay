@@ -11,6 +11,7 @@ function MeterReadings() {
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [readingError, setReadingError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -91,7 +92,15 @@ function MeterReadings() {
                             type="number"
                             value={dayMeter}
                             placeholder={previousMeters.day}
-                            onChange={(e) => setDayMeter(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (/^\d*$/.test(value)) {
+                                    setDayMeter(value);
+                                    setReadingError("");
+                                } else {
+                                    setReadingError("Можно отправить только записанные целыми числами показания");
+                                }
+                            }}
                             required
                         />
                     </div>
@@ -101,7 +110,15 @@ function MeterReadings() {
                             type="number"
                             value={nightMeter}
                             placeholder={previousMeters.night}
-                            onChange={(e) => setNightMeter(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (/^\d*$/.test(value)) {
+                                    setNightMeter(value);
+                                    setReadingError("");
+                                } else {
+                                    setReadingError("Можно отправить только записанные целыми числами показания");
+                                }
+                            }}
                             required
                         />
                     </div>
@@ -116,6 +133,7 @@ function MeterReadings() {
                     </button>
                 }
                 {error && <p className="error-message">Ошибка при отправке показаний. Попробуйте ещё раз.</p>}
+                {readingError && <p className="error-message">{readingError}</p>}
             </div>
         </div>
     );

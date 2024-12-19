@@ -9,6 +9,7 @@ function Profile() {
     const [isEditing, setIsEditing] = useState(false);
     const [setLoading] = useState(false);
     const [setError] = useState(false);
+    const [readingError, setReadingError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -126,10 +127,19 @@ function Profile() {
                                type="number"
                                name="accountNumber"
                                value={formData.accountNumber || ""}
-                               onChange={handleInputChange}
+                               onChange={(e) => {
+                                   const value = e.target.value;
+                                   if (/^\d*$/.test(value)) {
+                                       setFormData((prev) => ({ ...prev, accountNumber: value }));
+                                       setReadingError("");
+                                   } else {
+                                       setReadingError("Можно ввести только записанный целым числом лицевой счет");
+                                   }
+                               }}
                         />
                     </label>
                     <p className="edit-text"><b className="email-block">Email:</b> {userData?.email || "Не указан"}</p>
+                    {readingError && <p className="error-message">{readingError}</p>}
                     <button className="save-change-btn" onClick={handleSave}>Сохранить</button>
                     <button className="cancel-button" onClick={() => setIsEditing(false)}>Отмена</button>
                 </div>
